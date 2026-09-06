@@ -133,7 +133,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
 .narration {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  font-size: clamp(1.05rem, 2.4vw, 1.65rem);
   line-height: 1.36;
   font-feature-settings: var(--lining);
   max-width: 30ch;
@@ -232,18 +232,23 @@ button { font: inherit; color: inherit; background: none; border: none; }
 
 /* ---- hero ---------------------------------------------------------- */
 
-.hero { padding: var(--s8) 0 var(--s7); }
+/* On a phone the hero must not eat the whole screen before the search box.
+   It is compressed hard below 700px and only opens up when there is room. */
+.hero { padding: var(--s6) 0 var(--s5); }
+@media (min-width: 700px) { .hero { padding: var(--s8) 0 var(--s7); } }
 @media (min-width: 900px) { .hero { padding: var(--s9) 0 var(--s8); } }
 
-.hero__grid { display: grid; gap: var(--s6); }
+.hero__grid { display: grid; gap: var(--s4); }
+@media (min-width: 700px) { .hero__grid { gap: var(--s6); } }
 @media (min-width: 1000px) {
   .hero__grid { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--s8); align-items: end; }
 }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 8.5vw, 5.6rem);
-  margin: var(--s4) 0 0;
+  font-size: clamp(2.15rem, 8.5vw, 5.6rem);
+  margin: var(--s3) 0 0;
 }
+@media (min-width: 700px) { .hero h1 { margin-top: var(--s4); } }
 .hero h1 em { font-style: italic; }
 
 .stats {
@@ -252,7 +257,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   border-top: var(--rule);
 }
 @media (min-width: 560px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.stat { padding: var(--s4) var(--s4) var(--s4) 0; border-bottom: var(--hairline); }
+.stat { padding: var(--s3) var(--s4) var(--s3) 0; border-bottom: var(--hairline); }
 .stat:nth-child(odd) { padding-right: var(--s4); }
 @media (min-width: 560px) { .stat { border-bottom: none; } }
 .stat dt {
@@ -264,7 +269,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
 .stat dd {
   margin: var(--s1) 0 0;
   font-family: var(--serif);
-  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  font-size: clamp(1.5rem, 4.5vw, 2.6rem);
   line-height: 1;
   font-feature-settings: var(--lining);
 }
@@ -293,128 +298,6 @@ button { font: inherit; color: inherit; background: none; border: none; }
   .diagram svg.dg-wide { display: block; }
   .diagram svg.dg-tall { display: none; }
 }
-
-/* ---- search -------------------------------------------------------- */
-
-.search { border-top: var(--rule); padding-top: var(--s6); }
-.search__field {
-  display: flex;
-  align-items: stretch;
-  border: var(--rule);
-}
-.search__field:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
-.search__field input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  background: transparent;
-  color: inherit;
-  font-family: var(--serif);
-  font-size: clamp(1.35rem, 3.6vw, 2rem);
-  line-height: 1.2;
-  padding: var(--s4) var(--s4);
-  font-feature-settings: var(--lining);
-}
-.search__field input::placeholder { color: inherit; font-style: italic; }
-.search__field input:focus { outline: none; }
-.search__btn {
-  flex: none;
-  border-left: var(--rule);
-  padding: 0 var(--s5);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.search__btn:hover { background: var(--ink); color: var(--ground); }
-.search__hint {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s3);
-  margin-top: var(--s3);
-  font-size: 13px;
-}
-kbd {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 700;
-  border: var(--hairline);
-  padding: 1px 6px;
-}
-.chips { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: var(--s5); }
-.chip {
-  border: var(--hairline);
-  padding: 9px var(--s4);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  font-feature-settings: var(--lining);
-  min-height: 40px;
-}
-.chip:hover { border-width: 2px; padding: 8px 15px; }
-.chip[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
-.chip .c { font-weight: 400; }
-
-/* ---- results ------------------------------------------------------- */
-
-.results { padding: var(--s6) 0 var(--s8); }
-.results__bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s3);
-  border-bottom: var(--rule);
-  padding-bottom: var(--s3);
-  margin-bottom: var(--s2);
-  font-size: 13px;
-}
-.rowlist { list-style: none; margin: 0; padding: 0; }
-.row { border-bottom: var(--hairline); padding: var(--s5) 0; display: grid; gap: var(--s3); }
-@media (min-width: 820px) {
-  .row { grid-template-columns: minmax(0, 1fr) 210px; gap: var(--s6); align-items: start; }
-}
-.row__name {
-  font-family: var(--serif);
-  font-size: clamp(1.45rem, 3vw, 1.9rem);
-  line-height: 1.12;
-  margin: 0;
-  font-feature-settings: var(--lining);
-}
-.row__desc { margin: var(--s2) 0 0; font-size: 15px; line-height: 1.55; max-width: var(--measure); }
-.row__links { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin-top: var(--s2); font-size: 12px; }
-/* Padded to clear the 24px minimum target size without changing the type. */
-.row__links a { font-weight: 600; letter-spacing: 0.03em; display: inline-block; padding: 6px 0; }
-.row__meta { font-size: 12px; }
-.row__meta dl { display: grid; grid-template-columns: auto 1fr; gap: 3px var(--s2); margin: 0; align-items: baseline; }
-.row__meta dt { font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; }
-.row__meta dd { margin: 0; font-feature-settings: var(--lining); text-align: right; }
-.row__score { border: var(--hairline); padding: 1px 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; }
-.row__self { border: var(--rule); padding: 2px 7px; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-@media (min-width: 820px) {
-  .row__meta { border-left: var(--hairline); padding-left: var(--s4); }
-}
-
-.empty { padding: var(--s8) 0; text-align: center; }
-.empty p { margin: 0 auto var(--s4); max-width: 44ch; }
-
-.more {
-  display: block;
-  width: 100%;
-  border: var(--rule);
-  padding: var(--s4);
-  margin-top: var(--s5);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.more:hover { background: var(--ink); color: var(--ground); }
 
 /* ---- elsewhere card ------------------------------------------------ */
 
@@ -496,66 +379,183 @@ kbd {
 .dg-ground { fill: var(--ground); }
 .dg-hatch-bg { fill: var(--ground); }
 
-/* ---- structural inversion ------------------------------------------ */
 
-/* A black band needs a little more air than a white one, or it reads heavy. */
-.inverse .shell { padding-top: 0; padding-bottom: 0; }
-.inverse .hr { border-top-color: var(--ink); }
+/* ================================================================
+   The tool
+   ================================================================ */
 
-/* ---- facets --------------------------------------------------------- */
+/* Results sit in a narrower measure than the page, so descriptions stay
+   readable on a wide screen instead of running the full 1180px. */
+.tool { padding: var(--s5) 0 var(--s8); }
+@media (min-width: 700px) { .tool { padding: var(--s7) 0 var(--s9); } }
+.tool__in { width: 100%; max-width: 940px; margin: 0 auto; padding: 0 var(--s5); }
+@media (min-width: 900px) { .tool__in { padding: 0 var(--s7); } }
 
-.layout { display: grid; gap: var(--s6); }
-@media (min-width: 1000px) {
-  .layout { grid-template-columns: 244px minmax(0, 1fr); gap: var(--s8); align-items: start; }
+/* ---- search --------------------------------------------------------- */
+
+.find { border: var(--rule); display: flex; align-items: stretch; }
+.find:focus-within { outline: 2px solid var(--ink); outline-offset: 3px; }
+.find input {
+  flex: 1; min-width: 0; border: none; background: transparent; color: inherit;
+  font-family: var(--serif); font-size: clamp(1.3rem, 4vw, 1.9rem); line-height: 1.2;
+  padding: var(--s4); font-feature-settings: var(--lining);
+}
+.find input::placeholder { color: inherit; font-style: italic; }
+.find input:focus { outline: none; }
+.find button {
+  flex: none; border-left: var(--rule); padding: 0 var(--s4); cursor: pointer;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.find button:hover { background: var(--ink); color: var(--ground); }
+
+.hint {
+  display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); justify-content: space-between;
+  margin-top: var(--s3); font-size: 12px;
 }
 
-.facets { display: grid; gap: var(--s5); }
-@media (min-width: 1000px) { .facets { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; padding-right: var(--s2); } }
-.facet { border-top: var(--rule); padding-top: var(--s3); }
-.facet__head {
-  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2);
-  width: 100%; text-align: left; cursor: pointer; padding: 0 0 var(--s2);
+/* ---- the one visible axis ------------------------------------------- */
+
+.axis { margin-top: var(--s6); }
+.axis__label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  margin: 0 0 var(--s3);
 }
-.facet__head h3 {
-  font-family: var(--sans); font-size: 10px; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase;
+/* On a phone these wrap to one chip per line and push the results off the
+   screen, so below 700px they become a single swipeable strip instead. The
+   chip cut off at the right edge is the affordance. */
+.chips {
+  display: flex; gap: 6px; flex-wrap: nowrap;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  padding-bottom: var(--s2); margin-bottom: calc(var(--s2) * -1);
+  scroll-snap-type: x proximity;
 }
-.facet__head span { font-size: 11px; font-feature-settings: var(--lining); }
-.facet ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
-.facet li button {
+.chips > * { scroll-snap-align: start; }
+@media (min-width: 700px) {
+  .chips { flex-wrap: wrap; overflow-x: visible; padding-bottom: 0; margin-bottom: 0; }
+}
+.chip {
+  border: var(--hairline); padding: 7px 11px; font-size: 13px; cursor: pointer;
+  background: none; color: inherit; min-height: 34px; display: inline-flex;
+  align-items: center; gap: 7px; white-space: nowrap;
+}
+.chip:hover { border-width: 2px; padding: 6px 10px; }
+.chip[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
+.chip i { font-style: normal; font-size: 11px; font-feature-settings: var(--lining); }
+
+/* ---- refine, closed by default -------------------------------------- */
+
+.refine { margin-top: var(--s4); border-top: var(--hairline); }
+.refine__toggle {
+  display: flex; align-items: center; gap: var(--s2); width: 100%;
+  padding: var(--s3) 0; cursor: pointer; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.refine__toggle span[aria-hidden] { font-size: 15px; line-height: 1; }
+.refine__body { padding-bottom: var(--s4); display: grid; gap: var(--s5); }
+@media (min-width: 640px) { .refine__body { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s6); } }
+@media (min-width: 980px) { .refine__body { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.group h3 {
+  font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; margin: 0 0 var(--s2);
+  border-bottom: var(--hairline);
+}
+.group h3 button {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  width: 100%; font: inherit; letter-spacing: inherit; text-transform: inherit;
+  padding: 9px 0; cursor: pointer; min-height: 38px;
+}
+.group h3 button span { font-size: 14px; line-height: 1; }
+
+/* Below 700px each group collapses, so the open panel stays short enough to
+   scroll past. Above it there is room for the columns, and the heading is
+   inert rather than a control that appears to do nothing. */
+@media (max-width: 699px) {
+  .group.is-collapsed ul,
+  .group.is-collapsed .group__more { display: none; }
+}
+@media (min-width: 700px) {
+  .group h3 button { pointer-events: none; cursor: default; padding: 0 0 5px; min-height: 0; }
+  .group h3 button span { display: none; }
+}
+.group ul { list-style: none; margin: 0; padding: 0; }
+.group li button {
   display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3);
-  width: 100%; text-align: left; padding: 5px 6px; font-size: 13px; cursor: pointer;
-  border: 1px solid transparent; min-height: 28px;
+  width: 100%; text-align: left; padding: 5px 5px 5px 0; font-size: 13px; cursor: pointer;
+  min-height: 28px; border-bottom: 1px solid transparent;
 }
-.facet li button:hover { border-color: var(--ink); }
-.facet li button[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
-.facet li b { font-weight: 500; }
-.facet li i { font-style: normal; font-feature-settings: var(--lining); font-size: 11px; }
-.facet__more { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 6px; }
-.facet__more:hover { text-decoration: underline; }
+.group li button:hover { border-bottom-color: var(--ink); }
+.group li button[aria-pressed='true'] { background: var(--ink); color: var(--ground); padding-left: 5px; }
+.group li i { font-style: normal; font-size: 11px; font-feature-settings: var(--lining); }
+.group__more { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 6px 0; }
+.group__more:hover { text-decoration: underline; }
 
-.applied { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; margin-bottom: var(--s4); }
-.applied__tag {
-  display: inline-flex; align-items: center; gap: 6px;
-  border: var(--hairline); padding: 5px 8px; font-size: 12px; cursor: pointer;
-}
-.applied__tag:hover { background: var(--ink); color: var(--ground); }
-.applied__tag em { font-style: normal; font-weight: 700; }
+/* ---- state line ------------------------------------------------------ */
 
-/* ---- grant rows ------------------------------------------------------ */
+.state {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2) var(--s3);
+  border-top: var(--rule); margin-top: var(--s5); padding-top: var(--s3);
+}
+.state__count { font-size: 13px; margin-right: auto; }
+.state__count strong { font-feature-settings: var(--lining); }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; border: var(--hairline);
+  padding: 4px 8px; font-size: 12px; cursor: pointer; background: none; color: inherit;
+  min-height: 26px;
+}
+.pill:hover { background: var(--ink); color: var(--ground); }
+.pill b { font-weight: 600; }
 
-.grant__tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--s3); }
-.tag {
-  border: var(--hairline); padding: 4px 7px; font-size: 11px; letter-spacing: 0.02em;
-  cursor: pointer; background: none; min-height: 26px;
+/* ---- results --------------------------------------------------------- */
+
+.grants { list-style: none; margin: var(--s2) 0 0; padding: 0; }
+.g { border-bottom: var(--hairline); padding: var(--s5) 0; }
+.g__top { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2) var(--s4); }
+.g__name {
+  font-family: var(--serif); font-size: clamp(1.35rem, 3.4vw, 1.75rem); line-height: 1.1;
+  margin: 0; margin-right: auto; font-feature-settings: var(--lining);
 }
-.tag:hover { background: var(--ink); color: var(--ground); }
-.tag--solid { background: var(--ink); color: var(--ground); }
-.repeat {
-  border: var(--rule); padding: 2px 7px; font-size: 10px; font-weight: 700;
-  letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+.g__where {
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700;
+  font-feature-settings: var(--lining); white-space: nowrap;
 }
-.grant__other { font-size: 12px; margin-top: var(--s2); }
+.g__desc { margin: var(--s2) 0 0; font-size: 15px; line-height: 1.55; }
+.g__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 2px 0;
+  margin-top: var(--s3); font-size: 12px;
+}
+/* Middots are drawn by the layout, not typed into the copy. They hang off the
+   preceding item rather than the following one: when the line wraps, a new
+   line then starts with a word instead of an orphaned separator. */
+.g__meta > *:not(:last-child)::after { content: '·'; padding: 0 7px; }
+.g__meta button {
+  cursor: pointer; font-size: 12px; letter-spacing: 0.01em; padding: 3px 0;
+  border-bottom: 1px solid transparent; min-height: 24px;
+}
+.g__meta button:hover { border-bottom-color: var(--ink); }
+.g__meta button.is-field { font-weight: 700; }
+.g__meta span { padding: 3px 0; }
+.g__links { display: flex; flex-wrap: wrap; gap: var(--s4); margin-top: var(--s2); font-size: 12px; }
+.g__links a { font-weight: 600; display: inline-block; padding: 5px 0; }
+.g__repeat {
+  border: var(--hairline); padding: 2px 7px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+}
+.g__score {
+  border: var(--hairline); padding: 1px 5px; font-size: 10px; font-weight: 700;
+  font-feature-settings: var(--lining);
+}
+
+/* ---- empty state and pagination ------------------------------------- */
+
+.empty { padding: var(--s8) 0; text-align: center; }
+.empty p { margin: 0 auto var(--s4); max-width: 44ch; }
+
+.more {
+  display: block; width: 100%; border: var(--rule); padding: var(--s4);
+  margin-top: var(--s5); font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; cursor: pointer;
+}
+.more:hover { background: var(--ink); color: var(--ground); }
 
 /* ---- credit band ----------------------------------------------------- */
 
@@ -565,8 +565,5 @@ kbd {
 .band h2 { font-size: clamp(1.8rem, 4.2vw, 2.6rem); }
 .band p { margin: var(--s3) 0 0; font-size: 15px; max-width: 60ch; }
 
-/* Visually hidden, still announced. */
-.sr-note {
-  position: absolute; width: 1px; height: 1px; margin: -1px;
-  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
+.stats-wrap { margin-top: var(--s5); }
+@media (min-width: 700px) { .stats-wrap { margin-top: var(--s7); } }

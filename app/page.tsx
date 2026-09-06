@@ -36,7 +36,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="shell" style={{ marginTop: 'var(--s7)' }}>
+          <div className="shell stats-wrap">
             <dl className="stats">
               <div className="stat">
                 <dt>Grants</dt>
@@ -60,13 +60,14 @@ export default function Page() {
           </div>
         </section>
 
+        <Explorer data={data} />
+
         <ProgrammeDiagram
           series={data.facets.series}
           tranches={data.facets.tranche}
           total={data.grants.length}
         />
 
-        <Explorer data={data} />
         <Credit grants={data.grants.length} />
         <About data={data} />
       </main>

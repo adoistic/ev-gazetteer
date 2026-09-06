@@ -1,136 +1,85 @@
 'use client'
 
 import type { Grant, Person, Gazetteer } from '../lib/types'
-import { formatDate, href, linkLabel } from '../lib/format'
+import { formatDate, href } from '../lib/format'
 
-/** One grant. The tags are clickable, so a row is also a way to browse. */
+/**
+ * One grant, in four lines: who, what, and a single meta line of facts.
+ *
+ * The facts are clickable, so a row doubles as a way to browse, but they are
+ * set as plain text separated by middots rather than as boxes. Eight bordered
+ * tags per row turned the list into noise and competed with the name.
+ */
 export default function GrantRow({
   grant,
   score,
   vocab,
   person,
-  otherGrants,
   onTag,
 }: {
   grant: Grant
   score?: number
   vocab: Gazetteer['vocab']
   person?: Person
-  otherGrants: Grant[]
   onTag: (facet: string, value: string) => void
 }) {
   const post = href(grant.link)
   const date = formatDate(grant.date)
-  const extra = [...grant.project_links, ...grant.personal_links].slice(0, 2)
+
+  // At most five facts, chosen so every row reads the same way: what field,
+  // what they made, who they were, where. Anything rarer stays out of the list.
+  const facts: { key: string; facet?: string; value?: string; label: string; primary?: boolean }[] = []
+  for (const f of grant.fields) {
+    facts.push({ key: `f${f}`, facet: 'field', value: f, label: vocab.field[f], primary: true })
+  }
+  if (grant.outputs[0]) {
+    facts.push({ key: `o${grant.outputs[0]}`, facet: 'output', value: grant.outputs[0], label: vocab.output[grant.outputs[0]] })
+  }
+  facts.push({
+    key: 'stage',
+    facet: 'stage',
+    value: grant.stage,
+    label: grant.age ? `${vocab.stage[grant.stage]}, ${grant.age}` : vocab.stage[grant.stage],
+  })
+  if (grant.country) {
+    facts.push({ key: 'country', facet: 'country', value: grant.country, label: grant.country })
+  }
 
   return (
-    <li className="row" id={`grant-${grant.id}`}>
-      <div>
-        <h3 className="row__name">
-          {grant.name}
-          {person?.repeat && (
-            <span className="repeat" style={{ marginLeft: 'var(--s3)' }}>
-              {person.grants.length} grants
-            </span>
-          )}
-        </h3>
-
-        {grant.description && <p className="row__desc">{grant.description}</p>}
-
-        <div className="grant__tags">
-          {grant.fields.map((f) => (
-            <button key={f} type="button" className="tag tag--solid" onClick={() => onTag('field', f)}>
-              {vocab.field[f]}
-            </button>
-          ))}
-          {grant.outputs.map((o) => (
-            <button key={o} type="button" className="tag" onClick={() => onTag('output', o)}>
-              {vocab.output[o]}
-            </button>
-          ))}
-          {grant.topics.slice(0, 4).map((t) => (
-            <button key={t} type="button" className="tag" onClick={() => onTag('topic', t)}>
-              {t}
-            </button>
-          ))}
-        </div>
-
-        {otherGrants.length > 0 && (
-          <p className="grant__other">
-            Also funded for{' '}
-            {otherGrants.map((g, i) => (
-              <span key={g.id}>
-                {i > 0 && ', '}
-                <a className="link" href={`#grant-${g.id}`}>
-                  {g.batch}
-                </a>
-              </span>
-            ))}
-            .
-          </p>
-        )}
-
-        {grant.team && <p className="grant__other">Part of the {grant.team} team.</p>}
-
-        <div className="row__links">
-          {post && (
-            <a className="link" href={post} target="_blank" rel="noopener noreferrer">
-              Announcement post
-            </a>
-          )}
-          {extra.map((l) => (
-            <a className="link" key={l} href={href(l) as string} target="_blank" rel="noopener noreferrer">
-              {linkLabel(l)}
-            </a>
-          ))}
-        </div>
+    <li className="g" id={`grant-${grant.id}`}>
+      <div className="g__top">
+        <h3 className="g__name">{grant.name}</h3>
+        {person?.repeat && <span className="g__repeat">{person.grants.length} grants</span>}
+        {typeof score === 'number' && <span className="g__score">{Math.round(score * 100)}</span>}
+        <span className="g__where">
+          {grant.batch}
+          {date && ` · ${date}`}
+        </span>
       </div>
 
-      <div className="row__meta">
-        <dl>
-          <dt>Cohort</dt>
-          <dd>{grant.batch}</dd>
-          {date && (
-            <>
-              <dt>Announced</dt>
-              <dd>{date}</dd>
-            </>
-          )}
-          {grant.country && (
-            <>
-              <dt>Based</dt>
-              <dd>{grant.country}</dd>
-            </>
-          )}
-          {grant.origin && (
-            <>
-              <dt>From</dt>
-              <dd>{grant.origin}</dd>
-            </>
-          )}
-          <dt>Stage</dt>
-          <dd>
-            {vocab.stage[grant.stage]}
-            {grant.age ? `, ${grant.age}` : ''}
-          </dd>
-          <dt>Grant</dt>
-          <dd>{vocab.purpose[grant.purpose]}</dd>
-          {grant.org && (
-            <>
-              <dt>Project</dt>
-              <dd>{grant.org}</dd>
-            </>
-          )}
-          {typeof score === 'number' && (
-            <>
-              <dt>Match</dt>
-              <dd>
-                <span className="row__score num">{Math.round(score * 100)}</span>
-              </dd>
-            </>
-          )}
-        </dl>
+      {grant.description && <p className="g__desc">{grant.description}</p>}
+
+      <div className="g__meta">
+        {facts.map((f) => (
+          <button
+            key={f.key}
+            type="button"
+            className={f.primary ? 'is-field' : undefined}
+            onClick={() => f.facet && f.value && onTag(f.facet, f.value)}
+          >
+            {f.label}
+          </button>
+        ))}
+        {grant.org && <span>{grant.org}</span>}
       </div>
+
+      {post && (
+        <div className="g__links">
+          <a className="link" href={post} target="_blank" rel="noopener noreferrer">
+            Announcement post
+          </a>
+        </div>
+      )}
     </li>
   )
 }
