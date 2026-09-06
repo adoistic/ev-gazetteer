@@ -181,15 +181,21 @@ button { font: inherit; color: inherit; background: none; border: none; }
   gap: var(--s3);
   text-decoration: none;
   min-width: 0;
+  padding: 9px 0;
 }
+.brand picture { flex: none; display: block; }
 .brand__mark { width: 26px; height: 26px; flex: none; }
+.brand__label { min-width: 0; }
 .brand__text {
+  display: block;
   font-family: var(--serif);
   font-size: 20px;
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -0.01em;
-  white-space: nowrap;
 }
+/* The full name needs room. Below that, the mark and the short name carry it. */
+.brand__long { display: none; }
+@media (min-width: 760px) { .brand__long { display: inline; } }
 .brand__text b { font-weight: 600; }
 .brand__sub {
   font-family: var(--sans);
@@ -213,9 +219,11 @@ button { font: inherit; color: inherit; background: none; border: none; }
 .mastnav a:hover { border-color: var(--ink); }
 .mastnav a.is-cta { border-color: var(--ink); }
 .mastnav a.is-cta:hover { background: var(--ink); color: var(--ground); }
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .mastnav .opt { display: none; }
   .brand__sub { display: none; }
+  .brand__text { font-size: 18px; }
+  .mastnav a.is-cta { padding: 10px var(--s3); font-size: 12px; }
 }
 
 /* ---- hero ---------------------------------------------------------- */
@@ -257,6 +265,8 @@ button { font: inherit; color: inherit; background: none; border: none; }
   font-feature-settings: var(--lining);
 }
 .stat dd small { font-family: var(--sans); font-size: 12px; letter-spacing: 0.04em; }
+/* A range is two numbers and a word; it should stay on one line. */
+.stat dd.range { font-size: clamp(1.35rem, 3.4vw, 2.1rem); white-space: nowrap; }
 
 /* ---- diagram ------------------------------------------------------- */
 
@@ -270,10 +280,15 @@ button { font: inherit; color: inherit; background: none; border: none; }
   margin-bottom: var(--s6);
 }
 .diagram__note { font-size: 13px; max-width: 46ch; margin: 0; }
-.diagram svg { width: 100%; height: auto; display: block; }
-.dg-wide { display: none; }
-.dg-tall { display: block; }
-@media (min-width: 900px) { .dg-wide { display: block; } .dg-tall { display: none; } }
+.diagram svg { width: 100%; height: auto; }
+/* Both selectors carry the element, so the toggle is not outranked by the
+   rule above. Only one drawing is in the document at any width. */
+.diagram svg.dg-wide { display: none; }
+.diagram svg.dg-tall { display: block; }
+@media (min-width: 900px) {
+  .diagram svg.dg-wide { display: block; }
+  .diagram svg.dg-tall { display: none; }
+}
 
 /* ---- search -------------------------------------------------------- */
 
@@ -367,8 +382,9 @@ kbd {
   font-feature-settings: var(--lining);
 }
 .row__desc { margin: var(--s2) 0 0; font-size: 15px; line-height: 1.55; max-width: var(--measure); }
-.row__links { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); margin-top: var(--s3); font-size: 12px; }
-.row__links a { font-weight: 600; letter-spacing: 0.03em; }
+.row__links { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin-top: var(--s2); font-size: 12px; }
+/* Padded to clear the 24px minimum target size without changing the type. */
+.row__links a { font-weight: 600; letter-spacing: 0.03em; display: inline-block; padding: 6px 0; }
 .row__meta { font-size: 12px; }
 .row__meta dl { display: grid; grid-template-columns: auto 1fr; gap: 3px var(--s2); margin: 0; align-items: baseline; }
 .row__meta dt { font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 10px; }

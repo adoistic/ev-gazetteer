@@ -56,7 +56,7 @@ export default function Page() {
               </div>
               <div className="stat">
                 <dt>Announced</dt>
-                <dd className="num">
+                <dd className="num range">
                   {earliest.slice(0, 4)} to {latest.slice(0, 4)}
                 </dd>
               </div>

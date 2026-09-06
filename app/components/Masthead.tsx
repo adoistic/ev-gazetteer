@@ -9,9 +9,9 @@ export default function Masthead() {
             <source srcSet="/brand/thothica-thumb-white.png" media="(prefers-color-scheme: dark)" />
             <img className="brand__mark" src="/brand/thothica-thumb-black.png" alt="" width={26} height={26} />
           </picture>
-          <span>
+          <span className="brand__label">
             <span className="brand__text">
-              Emergent Ventures <b>beyond the main series</b>
+              Emergent Ventures <b className="brand__long">beyond the main series</b>
             </span>
             <span className="brand__sub">A Thothica project</span>
           </span>
