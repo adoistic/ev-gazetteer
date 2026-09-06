@@ -13,7 +13,6 @@ export default function Page() {
   const dates = data.grants.map((g) => g.date).filter(Boolean) as string[]
   const earliest = dates.reduce((a, b) => (a < b ? a : b))
   const latest = data.updated
-  const repeat = data.people.filter((p) => p.repeat).length
   const countries = data.facets.country.length
 
   return (
@@ -72,9 +71,6 @@ export default function Page() {
         <About data={data} />
       </main>
       <Footer updated={latest} />
-      <p className="sr-note">
-        {repeat} people hold more than one grant.
-      </p>
     </>
   )
 }

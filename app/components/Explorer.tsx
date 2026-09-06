@@ -265,8 +265,9 @@ export default function Explorer({ data }: { data: Gazetteer }) {
             Refine{refineCount > 0 ? ` (${refineCount})` : ''}
           </button>
 
-          {refineOpen && (
-            <div className="refine__body" id="refine-body">
+          {/* Always rendered. Below the sidebar breakpoint CSS hides it behind
+              the toggle; in the sidebar there is room, so it simply shows. */}
+          <div className={refineOpen ? 'refine__body' : 'refine__body is-closed'} id="refine-body">
               {GROUPS.map(({ key, label, initial, sort }) => {
                 const values = live(key, sort)
                 if (!values.length) return null
@@ -313,8 +314,7 @@ export default function Explorer({ data }: { data: Gazetteer }) {
                   </div>
                 )
               })}
-            </div>
-          )}
+          </div>
         </div>
 
         </div>

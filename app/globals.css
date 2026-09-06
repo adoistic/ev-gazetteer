@@ -574,12 +574,17 @@ button { font: inherit; color: inherit; background: none; border: none; }
    left exactly as it was. Above it there is room to put the search and the
    filters in their own column, so the results start at the top of the page
    instead of below a screen of controls. */
+/* Below 1000px the filter groups hide behind the Refine toggle. */
+@media (max-width: 999px) {
+  .refine__body.is-closed { display: none; }
+}
+
 @media (min-width: 1000px) {
   .tool__in.tool__grid {
     max-width: 1240px;
     display: grid;
-    grid-template-columns: 312px minmax(0, 1fr);
-    gap: var(--s8);
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: var(--s7);
     align-items: start;
   }
   .controls {
@@ -587,10 +592,16 @@ button { font: inherit; color: inherit; background: none; border: none; }
     top: 76px;
     max-height: calc(100vh - 96px);
     overflow-y: auto;
-    padding-right: var(--s3);
+    /* A hairline marks where the controls end and the results begin. */
+    border-right: var(--hairline);
+    padding-right: var(--s5);
     /* The rail scrolls on its own; keep it from dragging the page with it. */
     overscroll-behavior: contain;
   }
+  /* The sidebar is already the container, so a second disclosure inside it
+     earns nothing. The groups are simply shown and the toggle goes away. */
+  .controls .refine__toggle { display: none; }
+  .controls .refine { padding-top: var(--s4); }
   .controls .find input { font-size: 1.15rem; padding: var(--s3); }
   .controls .hint { flex-direction: column; gap: 4px; font-size: 11px; }
   .axis { margin-top: var(--s5); }
