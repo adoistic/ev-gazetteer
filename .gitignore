@@ -5,3 +5,6 @@ out/
 .DS_Store
 *.log
 .dev.vars
+
+# Superseded design docs from earlier versions of this project.
+docs/superpowers/
