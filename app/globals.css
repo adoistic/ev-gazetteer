@@ -50,12 +50,15 @@
   --lining: 'lnum' 1, 'tnum' 1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root { --ink: #fff; --ground: #000; }
+/* No light and dark modes. One design, which uses both inks in different
+   places: a section marked .inverse swaps the two tokens for everything
+   inside it, so the same components render correctly on either ground. */
+.inverse {
+  --ink: #fff;
+  --ground: #000;
+  background: var(--ground);
+  color: var(--ink);
 }
-/* An explicit choice always wins over the system setting. */
-:root[data-theme='light'] { --ink: #000; --ground: #fff; }
-:root[data-theme='dark']  { --ink: #fff; --ground: #000; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -166,6 +169,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   top: 0;
   z-index: 50;
   background: var(--ground);
+  color: var(--ink);
   border-bottom: var(--hairline);
 }
 .masthead__in {
@@ -488,5 +492,75 @@ kbd {
 /* SVG inherits the ink from body; these rects punch the ground back through
    a hatch so a label stays readable on top of it. */
 .diagram svg { color: var(--ink); }
+.inverse .dg-ground { fill: #000; }
 .dg-ground { fill: var(--ground); }
 .dg-hatch-bg { fill: var(--ground); }
+
+/* ---- structural inversion ------------------------------------------ */
+
+/* A black band needs a little more air than a white one, or it reads heavy. */
+.inverse .shell { padding-top: 0; padding-bottom: 0; }
+.inverse .hr { border-top-color: var(--ink); }
+
+/* ---- facets --------------------------------------------------------- */
+
+.layout { display: grid; gap: var(--s6); }
+@media (min-width: 1000px) {
+  .layout { grid-template-columns: 244px minmax(0, 1fr); gap: var(--s8); align-items: start; }
+}
+
+.facets { display: grid; gap: var(--s5); }
+@media (min-width: 1000px) { .facets { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; padding-right: var(--s2); } }
+.facet { border-top: var(--rule); padding-top: var(--s3); }
+.facet__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2);
+  width: 100%; text-align: left; cursor: pointer; padding: 0 0 var(--s2);
+}
+.facet__head h3 {
+  font-family: var(--sans); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.facet__head span { font-size: 11px; font-feature-settings: var(--lining); }
+.facet ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.facet li button {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3);
+  width: 100%; text-align: left; padding: 5px 6px; font-size: 13px; cursor: pointer;
+  border: 1px solid transparent; min-height: 28px;
+}
+.facet li button:hover { border-color: var(--ink); }
+.facet li button[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
+.facet li b { font-weight: 500; }
+.facet li i { font-style: normal; font-feature-settings: var(--lining); font-size: 11px; }
+.facet__more { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 6px; }
+.facet__more:hover { text-decoration: underline; }
+
+.applied { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; margin-bottom: var(--s4); }
+.applied__tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: var(--hairline); padding: 5px 8px; font-size: 12px; cursor: pointer;
+}
+.applied__tag:hover { background: var(--ink); color: var(--ground); }
+.applied__tag em { font-style: normal; font-weight: 700; }
+
+/* ---- grant rows ------------------------------------------------------ */
+
+.grant__tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: var(--s3); }
+.tag {
+  border: var(--hairline); padding: 2px 6px; font-size: 11px; letter-spacing: 0.02em;
+  cursor: pointer; background: none;
+}
+.tag:hover { background: var(--ink); color: var(--ground); }
+.tag--solid { background: var(--ink); color: var(--ground); }
+.repeat {
+  border: var(--rule); padding: 2px 7px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
+}
+.grant__other { font-size: 12px; margin-top: var(--s2); }
+
+/* ---- credit band ----------------------------------------------------- */
+
+.band { padding: var(--s8) 0; }
+.band__grid { display: grid; gap: var(--s5); }
+@media (min-width: 860px) { .band__grid { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--s8); } }
+.band h2 { font-size: clamp(1.8rem, 4.2vw, 2.6rem); }
+.band p { margin: var(--s3) 0 0; font-size: 15px; max-width: 60ch; }

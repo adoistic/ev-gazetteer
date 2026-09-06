@@ -1,0 +1,155 @@
+831|energy;health|air pollution;india|startup|project|India|-|founder|22|Praan
+832|materials;energy|plastic waste;building materials;india|startup|project|India|-|founder|19|Plascrete
+833|econ;gov|state capacity;india;vaccines|research;writing|project|India|-|academic|-|-
+834|computing;econ|e-commerce;india|startup|project|India|-|founder|-|Growcify
+835|linguistics;edu|english language;india|software;course|project|India|-|founder|-|The Queen's English
+836|econ;gov|crime;india;development economics|research|project|Netherlands|Chile|postdoc|-|-
+837|econ;gov|dalit capitalism;india;caste|research;writing|project|India|-|writer|-|-
+838|edu|rural education;india;youtube|video;nonprofit|project|India|-|founder|-|Study Garh
+839|ai;computing|semantic search;india|startup|project|India|-|school|17|Knowledge Engine
+840|edu;linguistics|stem education;india;kannada|nonprofit|project|India|-|founder|20|Project Sitara Foundation
+841|gov;econ|labour regulation;india;womens employment|thinktank|project|India|-|founder|-|Trayas Foundation
+842|ai;health|mobility analytics;covid-19;india|startup|project|India|-|founder|-|Infinite Analytics
+843|media;computing|disinformation;network science;india|software|project|India|-|undergrad|21|-
+844|media;energy|environmental journalism;india;coastal erosion|writing|project|India|-|writer|-|Peepli
+845|cities;econ|urbanisation;india;political economy|research|project|United Kingdom|India|academic|-|-
+846|econ;edu|political economy;india;education|course|project|India|-|grad|-|Polekon
+847|health;computing|contact tracing;india;privacy|hardware|project|India|-|founder|-|CONTACT
+848|space;computing|cubesats;open source;india|hardware;nonprofit|project|India|-|school|16|Paradox Sonic Space Research Agency
+849|media;arts|storytelling;india;apps|software|project|India|-|founder|-|StorySurf
+850|robotics;cities|drone delivery;india|startup|project|India|-|school|16|Airbound
+851|health;econ|excess mortality;covid-19;india|research|project|United States|India|academic|-|-
+852|history;ai|violence;india;digital archives|dataset|project|India|-|academic|-|India Violence Archive
+853|edu;computing|interactive learning;india|startup|project|India|-|founder|-|Primer
+854|edu|tutoring;india|startup|project|India|-|founder|23|SUVY Classes
+855|energy;cities|solar power;rural electrification;india|hardware|project|India|-|founder|28|-
+856|bio;ai|computational biology;protein structure;india|software|project|India|-|undergrad|21|-
+857|materials;energy|carbon capture;building materials;india|startup|project|India|-|founder|-|CarbonCraft
+858|edu|education technology;india|-|travel|India|-|school|18|UnMold
+859|edu|digital access;india|nonprofit|project|India|-|school|16|Mobilize
+860|ai;cities|self-driving cars;india|software|project|India|-|undergrad|22|-
+861|media;ai|journalism;india;newsletters|writing|project|India|-|writer|28|The Interval
+862|space;materials|rocketry;propellants;india|startup|project|India|-|founder|23|Space Fields
+863|media|investigative journalism;india|book|project|India|-|writer|38|-
+864|materials|graphene;bioplastics;india|research|project|India|-|undergrad|20|-
+865|health;gov|air pollution;monitoring|research|project|United States|India|school|16|-
+866|ai;edu|data science education;india|startup|project|India|-|founder|-|EquiTech Futures
+867|gov;econ|state capacity;india|thinktank|institution|India|-|founder|-|Artha Global
+868|edu;ai|ethnography;india;education|research|project|China|-|grad|26|-
+869|media;econ|entrepreneurship;bangladesh|magazine|project|Bangladesh|-|writer|-|Future Startup
+870|ai;gov|legal tech;india;ai alignment|startup|project|India|-|founder|21|Jhana
+871|talent|talent search;india;teenagers|startup|project|India|-|founder|24|Sigma91
+872|bio;ai|canine olfaction;disease detection;india|startup|project|India|-|founder|22|Dogluk
+873|finance|blockchain;small business;india|startup|project|India|-|founder|24|EquiDEI
+874|materials;bio|bioplastics;biomimicry|startup|project|?|-|school|-|SealXX
+875|neuro;materials|brain computer interfaces;biomimicry|startup|project|India|-|school|17|SealXX
+876|energy;materials|carbon capture;biomimicry|startup|project|India|-|school|17|SealXX
+877|cities;materials|biomimicry;sustainable cities|startup|project|?|-|school|16|SealXX
+878|econ;media|housing economics;magazines|startup;magazine|project|?|-|school|17|SealXX
+879|talent;edu|accelerators;india;teenagers|nonprofit|project|India|-|unknown|-|Nexteen
+880|talent;cities|sanitation;india;accelerators|nonprofit|project|India|-|school|16|Nexteen
+881|ai;finance|blockchain;india;accelerators|software|project|India|-|undergrad|22|Nexteen
+882|talent|startups;india;accelerators|nonprofit|project|India|-|school|19|Nexteen
+883|talent;health|nonprofits;india;accelerators|nonprofit|project|India|-|school|16|Nexteen
+884|media;materials|youtube;india;accelerators|video;podcast|project|India|-|school|19|Nexteen
+885|finance;computing|fintech;india|startup|project|India|-|founder|22|-
+886|materials;energy|plastic waste;building materials;india|startup|project|India|-|founder|-|TrashTrap
+887|econ;gov|dalit capitalism;india;caste|research|project|India|-|writer|-|-
+888|robotics;cities|drone delivery;mobility;india|startup|project|India|-|school|-|Airbound
+889|space;computing|cubesats;open source;india|hardware|project|India|-|school|-|Paradox Sonic Space Research Agency
+890|agri;energy|waste to fertiliser;india|startup|project|India|-|founder|-|BillionCarbon
+891|econ|development economics;india;slums|research|project|United States|India|academic|-|-
+892|edu;arts|sport;coaching;india|nonprofit|project|India|-|professional|-|ACE Snooker Foundation
+893|health;computing|menstrual health;india|startup|project|India|-|founder|-|Cranberry.Fit
+894|bio;ai|antimicrobial resistance;bioinformatics;india|research|travel|India|-|school|15|-
+895|cities;health|sanitation;india|startup|project|India|-|founder|43|Loocafe
+896|edu;math|teacher training;india;mathematics|nonprofit|project|India|-|founder|-|Aavishkaar
+897|media;gov|lgbtq;journalism;india|magazine|project|India|-|writer|-|queerbeat
+898|ai;bio|wildlife;bioacoustics;india|hardware|project|India|-|school|-|Aquastreet
+899|gov;media|immigration;india;community|book|project|United States|India|writer|26|Unshacked
+900|computing;security|cybersecurity;india|hardware|project|India|-|founder|-|-
+901|bio;energy|forest fires;radioactive tracing;india|research|project|India|-|undergrad|18|-
+902|health;computing|pharmacy delivery;india|startup|project|India|-|founder|24|Omeyo
+903|energy|electric vehicles;clean energy;india|startup|project|India|-|founder|23|Quintinno Labs
+904|talent;edu|talent search;mathematics;science|nonprofit|project|United Kingdom|-|independent|-|-
+905|ai;media|short video;india|startup|project|India|-|founder|22|-
+906|health;gov|family planning;hiv;nepal|nonprofit|project|Nepal|-|academic|-|Ostrom Center
+907|edu;talent|mentorship;india;school dropouts|nonprofit|project|India|-|school|17|Fun Learning Youth
+908|health;bio|anaemia;medical devices;india|startup|project|India|-|founder|-|HyGlo
+909|econ;talent|deeptech startups;india|research|project|India|-|independent|35|-
+910|ai;computing|augmented reality;3d modelling;india|startup|project|India|-|founder|23|Augrade
+911|math;bio|mathematical oncology;india|research|project|India|-|school|19|-
+912|media;gov|public discourse;india|magazine|project|India|-|writer|-|Conversations on India
+913|cities;computing|logistics;trucking;india|startup|project|India|-|founder|-|LAMROD
+914|finance|credit scoring;immigration;india|startup|project|India|-|founder|20|Zephyr
+915|econ|labour markets;india;informal work|research|project|India|-|academic|-|-
+916|arts|sailing;india|competition|travel|India|-|professional|25|-
+917|ai|artificial intelligence|-|career|India|-|undergrad|21|-
+918|bio;ai|canine olfaction;cancer screening;india|startup|project|India|-|founder|23|Dognosis
+919|bio;ai|canine olfaction;cancer screening;india|startup|project|India|-|founder|23|Dognosis
+920|linguistics;edu|olympiads;linguistics;india|competition|travel|India|-|school|17|-
+921|linguistics|olympiads;linguistics;polyglots;india|competition|travel|India|-|school|18|-
+922|linguistics;math|olympiads;linguistics;india|competition|travel|India|-|school|16|-
+923|linguistics;bio|olympiads;linguistics;india|competition|travel|India|-|school|18|-
+924|edu;health|child protection;india;toys|hardware|project|India|-|founder|24|Samskar Electronics
+925|health;ai|hearing aids;india;accessibility|hardware|project|India|-|founder|25|-
+926|energy;materials|direct air capture;energy storage;india|startup|project|India|-|founder|26|Bakz4ever
+927|finance;edu|neobanking;students;india|startup|project|India|-|founder|-|Zeni5
+928|energy;media|climate startups;podcasting;india|podcast|project|India|-|founder|26|Climapreneur
+929|talent;computing|recruitment;india;small towns|startup|project|India|-|founder|-|Cuvette
+930|bio;computing|dna computing;india|research|project|India|-|undergrad|21|-
+931|health;robotics|ventilators;medical devices;india|startup|project|India|-|founder|-|Biodesign Innovation Labs
+932|arts;history|acoustics;hindu temples;india|research|project|United States|India|postdoc|34|-
+933|neuro;health|neural interfaces;depression;india|startup|project|India|-|founder|22|Neural Inception
+934|history;linguistics|digital archives;india;periodicals|dataset|project|United Arab Emirates|India|academic|-|Ideas of India
+935|edu;talent|residencies;india;education|community|career|Canada|India|undergrad|20|The Residency
+936|neuro;arts|music therapy;india;mental health|research|project|India|-|undergrad|-|Maunitva Nirakaran
+937|ai;cities|construction intelligence;india|startup|project|India|-|founder|22|Contineu
+938|talent;computing|incubators;india;company formation|startup|project|India|United States|founder|-|Commenda
+939|materials;computing|noise cancellation|hardware|project|India|-|professional|-|-
+940|edu;talent|virtual internships;india;careers|startup|project|India|-|founder|35|Clever Harvey
+941|edu|stem curriculum;pakistan|-|career|Pakistan|-|professional|-|-
+942|edu;media|technology education;india;youtube|video|project|India|-|school|14|Technifyed
+943|talent;edu|talent search;india;gifted students|nonprofit|project|India|-|academic|-|Pratibha Poshak
+944|ai;edu|assistive technology;india;accessibility|startup|project|India|-|founder|-|Trestle Labs
+945|talent;finance|incubators;india;students|startup|project|India|-|founder|-|gradCapital
+946|computing;econ|search;market design;india|software|project|India|-|professional|42|-
+947|arts|film-making;india;rule of law|video|project|India|France|independent|-|-
+948|media;talent|youth media;india|magazine|project|India|-|school|19|Empower
+949|media;gov|animal welfare;india;policy|podcast|project|India|-|school|17|-
+950|energy|tidal energy;india|startup|project|India|-|founder|-|-
+951|edu;computing|mobile science labs;india|startup|project|India|-|founder|24|Edodwaja
+952|energy;materials|batteries;india|research|project|India|-|undergrad|-|-
+953|energy|airborne wind energy;india|startup|project|India|-|school|17|Alteon Energy
+954|gov;media|law;india;podcasting|podcast|project|India|-|professional|-|-
+955|cities;materials|sustainable construction;india|dataset|project|India|-|founder|-|Smarter Dharma
+956|health;cities|walking;india;apps|startup|project|India|-|founder|21|WalkingPal
+957|agri;robotics|drones;weeding;india|software|project|Canada|India|school|17|-
+958|computing|software;india|startup|project|India|-|school|15|bytecubetech
+959|energy;cities|charging stations;rural india|hardware|project|India|-|school|-|-
+960|energy;materials|electrolysers;hydrogen;india|research|project|India|-|independent|20|-
+961|talent;ai|community building;india;unconventional paths|community|project|India|-|founder|19|Wayfarers Space
+962|history;ai|indian heritage;sculpture;machine learning|software|project|India|-|writer|-|Virasat
+963|agri;health|nutrition;rice;india|startup|project|India|-|founder|19|UltraRice
+964|media;gov|data journalism;india|dataset;book|project|India|-|writer|-|Data For India
+965|agri|cassava;drought resistant crops;nepal|startup|project|Nepal|-|founder|-|Stalwart International
+966|security;gov|biosecurity;india;science diplomacy|research|project|India|-|professional|-|-
+967|gov;computing|courts;india;legal data|dataset|project|India|-|academic|-|XKDR Forum
+968|edu|communication skills;india|startup|project|United Kingdom|India|grad|-|Dialogue Dynamics
+969|neuro;ai|reading;cognitive science;india|research|project|India|-|postdoc|-|-
+970|ai;econ|supply chains;india|software|project|United States|India|school|18|-
+971|energy;materials|carbon capture;india|startup|project|India|-|founder|-|Matterak Technologies
+972|history;media|jewish history;india;digital archives|dataset|project|India|-|school|16|Jewish Virtual Museum
+973|physics;space|quantum magnetometers;navigation;india|startup|project|United States|India|founder|-|Dirac Labs
+974|edu;computing|programming education;india|nonprofit|project|India|-|professional|-|freeCodeProjects
+975|linguistics;arts|literary translation;tagore;india|book|project|India|-|writer|22|-
+976|neuro;ai|social dynamics;multi-agent systems;india|research|travel|India|-|grad|-|-
+977|energy;ai|solar power;fire prevention;india|startup|project|India|-|founder|-|Renkube
+978|health;bio|large scale diagnostics;india;epidemics|startup|project|India|-|founder|-|Drizzle Health
+979|math;computing|mathematics;computing;india|-|career|India|-|undergrad|-|-
+980|space;talent|aerospace;india;hardware community|community|career|India|-|undergrad|20|-
+981|finance|banking;india;financial inclusion|startup|project|United States|India|founder|23|All Asia NetBanking
+982|talent;bio|olympiads;science;india|competition|career|India|-|school|15|-
+983|space;robotics|drones;uavs;india|startup|project|India|-|founder|22|-
+984|history;linguistics|digital archives;sindhi literature;india|dataset|project|India|-|academic|-|PG Sindhi Library
+985|neuro|sleep;decision-making;india|research|travel|India|-|grad|-|-

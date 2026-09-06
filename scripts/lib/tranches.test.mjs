@@ -1,41 +1,25 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { isMainCohort, programmeOf, compareBatches, PROGRAMMES } from './tranches.mjs'
+import { seriesOf, trancheOf, compareBatches } from './tranches.mjs'
 
-test('numeric batches are the main series', () => {
-  assert.equal(isMainCohort('54'), true)
-  assert.equal(isMainCohort('1'), true)
-  assert.equal(isMainCohort(' 58 '), true)
+test('batches map to a series', () => {
+  assert.equal(seriesOf('54'), 'main')
+  assert.equal(seriesOf('India 15'), 'india')
+  assert.equal(seriesOf('India (Oct 2020)'), 'india')
+  assert.equal(seriesOf('Africa 3'), 'africa')
+  assert.equal(seriesOf('Covid Prize 4'), 'covid')
+  assert.equal(seriesOf('Progress Studies Tranche'), 'progress')
 })
 
-test('named tranches are not the main series', () => {
-  assert.equal(isMainCohort('India 15'), false)
-  assert.equal(isMainCohort('Africa 3'), false)
-  assert.equal(isMainCohort('Covid Prize 1'), false)
-  assert.equal(isMainCohort('Progress Studies Tranche'), false)
-  assert.equal(isMainCohort('India (Oct 2020)'), false)
-})
-
-test('batches map to the right programme', () => {
-  assert.equal(programmeOf('India 15'), 'india')
-  assert.equal(programmeOf('India (Oct 2020)'), 'india')
-  assert.equal(programmeOf('Africa 3'), 'africa')
-  assert.equal(programmeOf('Covid Prize 4'), 'covid')
-  assert.equal(programmeOf('Progress Studies Tranche'), 'progress')
-})
-
-test('main series batches have no programme', () => {
-  assert.equal(programmeOf('54'), null)
-  assert.equal(programmeOf(''), null)
+test('tranches hidden inside cohorts are found in the text', () => {
+  assert.equal(trancheOf('Ukraine tranche: Kyiv, piano.'), 'ukraine')
+  assert.equal(trancheOf('Ukraine cohort. Le Sallay Academy'), 'ukraine')
+  assert.equal(trancheOf('Dartmouth, archaeology tranche, drone radar'), 'archaeology')
+  assert.equal(trancheOf('biographies of scientists, science education tranche'), 'science-education')
+  assert.equal(trancheOf('podcast on women in science, science communication tranche'), 'science-communication')
+  assert.equal(trancheOf('Berlin, AI policy research.'), null)
 })
 
 test('batches sort naturally', () => {
-  const sorted = ['India 10', 'India 2', 'India 9'].sort(compareBatches)
-  assert.deepEqual(sorted, ['India 2', 'India 9', 'India 10'])
-})
-
-test('every programme has an id, label and blurb', () => {
-  for (const p of PROGRAMMES) {
-    assert.ok(p.id && p.label && p.blurb, `incomplete programme ${p.id}`)
-  }
+  assert.deepEqual(['India 10', 'India 2', 'India 9'].sort(compareBatches), ['India 2', 'India 9', 'India 10'])
 })

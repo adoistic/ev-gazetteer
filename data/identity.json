@@ -1,0 +1,74 @@
+{
+  "_comment": [
+    "Hand-adjudicated identity resolution, decided by reading the grant",
+    "descriptions rather than by matching strings. Every decision records why.",
+    "",
+    "'merge' means the rows are the same person's separate grants.",
+    "'joint' means one grant was made to several people who each have rows of",
+    "their own. A joint grant is listed under each of them and does NOT merge",
+    "them into one person.",
+    "'uncertain' looks like one person but the evidence does not settle it, so",
+    "the rows stay separate and the doubt is shown on the site."
+  ],
+
+  "merge": [
+    { "ids": [89, 238, 674], "canonical": "Kyle Redelinghuys", "why": "Spelt Redelinghuys in cohort 8 and Redlinghuys later. The Covid API, then the James Webb data API, then AI prenatal testing." },
+    { "ids": [345, 360], "canonical": "Viktoriia Shcherba", "why": "Cohorts 27 and 28 carry the same description and differ only in spelling." },
+    { "ids": [129, 1193], "canonical": "Andrew Ddembe", "why": "Ugandan last-mile health care; the Africa 4 row calls itself a follow-on grant for Mobiklinic." },
+    { "ids": [211, 311, 1259], "canonical": "Avi Schiffmann", "why": "Covid Prize 1 for the tracking site, then cohort 19 explicitly 'a second award to Avi', then InternetActivism in 26." },
+    { "ids": [106, 848, 889], "canonical": "Onkar Singh Batra", "why": "India 3 says 'received his first EV grant for his Covid Care Jammu project', which is the India 2 row. India 4 continues the CubeSat." },
+    { "ids": [225, 254, 409], "canonical": "Tymofiy Mylovanov", "why": "The first ever winner, given his own cohort 20, again in the cohort 22 Ukraine tranche, then with the Kyiv School of Economics in 31." },
+    { "ids": [57, 290], "canonical": "Jasmine Wang", "why": "Cohort 25 states 'Jasmine is a repeat winner'." },
+    { "ids": [62, 330], "canonical": "Tanner Greer", "why": "Progress Studies tranche, then cohort 27 for the Center for Strategic Translation." },
+    { "ids": [4, 585], "canonical": "Mark Lutter", "why": "Charter cities in cohort 1 under the institute's name, then under his own in 41." },
+    { "ids": [851, 1265], "canonical": "Anup Malani", "why": "Covid Prize 4 serology and the India 3 excess-deaths study." },
+    { "ids": [850, 888], "canonical": "Naman Pushp", "why": "Airbound, India 3 with Faraaz Baig, then India 4 alone." },
+    { "ids": [872, 918, 919], "canonical": "Akash Kulgod", "why": "Dogluk then Dognosis, across India 4, 5 and 6." },
+    { "ids": [5, 76], "canonical": "Harshita Arora", "why": "Brain-computer interfaces in cohort 1, then AtoB in cohort 6." },
+    { "ids": [15, 17], "canonical": "Kelly Smith", "why": "Prenda, as a nonprofit in cohort 1 and for-profit in cohort 2." },
+    { "ids": [107, 885], "canonical": "Nilay Kulkarni", "why": "MahaKavach in India 2, then his fintech start-up in India 4." },
+    { "ids": [128, 964], "canonical": "Rukmini S", "why": "India 9 says she 'won her first EV prize for her pandemic podcast', which is the October 2020 row." },
+    { "ids": [131, 138], "canonical": "Markus Strasser", "why": "Scientific search in cohort 11, the same work as a company in 12." },
+    { "ids": [144, 583], "canonical": "Matt Faherty", "why": "The NIH in cohort 12, the NSF in cohort 41." },
+    { "ids": [149, 296], "canonical": "Rasheed Griffith", "why": "Cohort 25 says 'Repeat winner', for a Caribbean think tank after the cohort 13 podcast." },
+    { "ids": [237, 584], "canonical": "Mehran Jalali", "why": "Energy storage in cohort 22, lidar of Mesoamerica in 41." },
+    { "ids": [346, 361], "canonical": "Dmytro Semykras", "why": "The same pianist in Graz, in the cohort 27 and 28 Ukraine tranches." },
+    { "ids": [447, 469], "canonical": "Yanchuk Dmytro", "why": "The same work on repairing electric station short circuits, cohorts 33 and 34." },
+    { "ids": [490, 547], "canonical": "Jim Larsen", "why": "Geothermal energy and Indonesia, cohorts 36 and 39." },
+    { "ids": [738, 791], "canonical": "Clara Collier", "why": "Asterisk magazine, cohorts 52 and 55." },
+    { "ids": [773, 792], "canonical": "Scott Ellis", "why": "Mississauga, AI film-making in 54 then science biographies in the 55 science education tranche." },
+    { "ids": [832, 886], "canonical": "Swasthik Padma", "why": "Plascrete in India 3, scaling it as TrashTrap in India 4." },
+    { "ids": [837, 887], "canonical": "Chandra Bhan Prasad", "why": "Dalit capitalism, India 3 and India 4." },
+    { "ids": [881, 917], "canonical": "Karthik Nagapuri", "why": "Nexteen in India 4, career development in India 5." },
+    { "ids": [1155, 1235], "canonical": "Emmanuel Nnadi", "why": "Phage therapy in Nigeria, Africa 1 and Africa 6." },
+    { "ids": [1166, 1237], "canonical": "Frida Andalu", "why": "Pipeline corrosion, Africa 3 and Africa 6." },
+    { "ids": [1176, 1236], "canonical": "Youhana Nassif", "why": "The Animatex festival in Cairo, Africa 3 and Africa 6." },
+    { "ids": [1178, 1224], "canonical": "Alex Kyabarongo", "why": "Ugandan veterinary graduate moving into biosecurity, Africa 3 and Africa 6." },
+    { "ids": [1199, 1248], "canonical": "Mmesomachi Nwachukwu", "why": "Mathematical olympiad training in Nigeria, Africa 5 and Africa 7." },
+    { "ids": [1210, 1242], "canonical": "Nikita Greenidge", "why": "Surgical robotics, Africa 5 and Africa 7." }
+  ],
+
+  "joint": [
+    { "id": 347, "members": [1265, 12], "why": "Cohort 28 is a joint grant to Anup Malani and Michael Sonnenschein, described as repeat winners collaborating." },
+    { "id": 658, "members": [263, 552], "why": "Cohort 46 free speech work by Sam Glover and Stella Tsantekidou, both earlier solo winners." },
+    { "id": 297, "members": [33, 174], "why": "The Fitzwilliam, by Fergus McCullough and Sam Enright, both named repeat winners." },
+    { "id": 842, "members": [100, 101], "why": "Infinite Analytics second grant, to Akash Bhatia and Puru Botla, who each hold an India 2 row." },
+    { "id": 662, "members": [313, 453], "why": "ChatARV, by Aden Nurie and Ian Cheshire, both earlier solo winners." },
+    { "id": 1218, "members": [1157, 1180], "why": "Africa 6 sanitation robotics, by Mercy Muwanguzi and Kwesiga Pather, both earlier solo winners." }
+  ],
+
+  "uncertain": [
+    { "ids": [99, 838], "names": ["Praveen Mishra", "Praveen Tiwari"], "note": "Both are described as founding Power of Youth as a teenager to help rural students in India. This may be one person recorded under two surnames, or two people. Not merged, because the evidence does not settle it." }
+  ],
+
+  "never_merge": { "why": "Placeholder rows that share a name but are separate unnamed grants.", "ids": [1, 22, 229, 250, 256, 321] },
+
+  "teams": [
+    { "ids": [113, 114, 115], "project": "PickMyWork" },
+    { "ids": [116, 117], "project": "E-Bot Arogya Sahayak" },
+    { "ids": [104, 105], "project": "labour market and migration research" },
+    { "ids": [874, 875, 876, 877, 878], "project": "SealXX" },
+    { "ids": [879, 880, 881, 882, 883, 884], "project": "Nexteen" },
+    { "ids": [920, 921, 922, 923], "project": "International Linguistics Olympiad team" }
+  ]
+}
