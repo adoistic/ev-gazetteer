@@ -31,15 +31,31 @@
   font-display: swap;
 }
 
+/* Light is the strict two ink palette. Dark is not: pure #fff on pure #000 is
+   21:1, which haloes and tires the eye over a long list, so dark mode uses a
+   near black ground and an off white ink. Every dark value below clears WCAG
+   AAA. This is the one deliberate departure from the two ink rule, and it
+   applies to dark mode only. */
 :root {
-  --ink: #000;
-  --ground: #fff;
+  --ink: #000;        /* body text */
+  --ink-soft: #000;   /* small labels and counts */
+  --ground: #fff;     /* page */
+  --line: #000;       /* borders and rules */
+  --fill: #000;       /* selected and hover fills */
+  --fill-ink: #fff;
+
+  --band: #000;       /* the .inverse bands */
+  --band-ink: #fff;
+  --band-ink-soft: #fff;
+  --band-line: #fff;
+  --band-fill: #fff;
+  --band-fill-ink: #000;
 
   --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --sans: 'Teachers', 'Trebuchet MS', Calibri, sans-serif;
 
-  --hairline: 1px solid var(--ink);
-  --rule: 2px solid var(--ink);
+  --hairline: 1px solid var(--line);
+  --rule: 2px solid var(--line);
 
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
   --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px; --s10: 128px;
@@ -50,12 +66,62 @@
   --lining: 'lnum' 1, 'tnum' 1;
 }
 
-/* No light and dark modes. One design, which uses both inks in different
-   places: a section marked .inverse swaps the two tokens for everything
-   inside it, so the same components render correctly on either ground. */
+
+/* --- dark palette -------------------------------------------------------
+   ground   #141414  page
+   band     #1E1E1E  the .inverse bands, raised rather than inverted
+   ink      #E6E6E6  14.8:1 on ground
+   ink-soft #A0A0A0   7.1:1, AAA
+   line     #666666   3.2:1, clears the 3:1 floor for interactive borders
+   fill     #2F2F2F  selected, with white text at 13.4:1
+   ------------------------------------------------------------------- */
+
+/* Follows the system unless an explicit choice has been made. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+  --ink: #E6E6E6;
+  --ink-soft: #A0A0A0;
+  --ground: #141414;
+  --line: #666666;
+  --fill: #2F2F2F;
+  --fill-ink: #FFFFFF;
+
+  --band: #1E1E1E;
+  --band-ink: #E6E6E6;
+  --band-ink-soft: #A0A0A0;
+  --band-line: #666666;
+  --band-fill: #3A3A3A;
+  --band-fill-ink: #FFFFFF;
+  }
+}
+
+/* An explicit choice overrides the system in both directions. */
+:root[data-theme='dark'] {
+  --ink: #E6E6E6;
+  --ink-soft: #A0A0A0;
+  --ground: #141414;
+  --line: #666666;
+  --fill: #2F2F2F;
+  --fill-ink: #FFFFFF;
+
+  --band: #1E1E1E;
+  --band-ink: #E6E6E6;
+  --band-ink-soft: #A0A0A0;
+  --band-line: #666666;
+  --band-fill: #3A3A3A;
+  --band-fill-ink: #FFFFFF;
+}
+
+/* A band is a filled section. In light mode it inverts to black on white; in
+   dark mode it lifts slightly off the page instead, because a white band would
+   put the brightest thing on screen inside a sticky header. */
 .inverse {
-  --ink: #fff;
-  --ground: #000;
+  --ground: var(--band);
+  --ink: var(--band-ink);
+  --ink-soft: var(--band-ink-soft);
+  --line: var(--band-line);
+  --fill: var(--band-fill);
+  --fill-ink: var(--band-fill-ink);
   background: var(--ground);
   color: var(--ink);
 }
@@ -107,7 +173,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
 }
 :focus:not(:focus-visible) { outline: none; }
 
-::selection { background: var(--ink); color: var(--ground); }
+::selection { background: var(--fill); color: var(--fill-ink); }
 
 /* ---- primitives ---------------------------------------------------- */
 
@@ -146,7 +212,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   background-image: repeating-linear-gradient(45deg, var(--ink) 0 1.5px, var(--ground) 1.5px 4px);
 }
 
-.invert { background: var(--ink); color: var(--ground); }
+.invert { background: var(--fill); color: var(--fill-ink); }
 
 .hr { border: 0; border-top: var(--hairline); margin: 0; }
 
@@ -220,9 +286,9 @@ button { font: inherit; color: inherit; background: none; border: none; }
   border: 1px solid transparent;
   white-space: nowrap;
 }
-.mastnav a:hover { border-color: var(--ink); }
-.mastnav a.is-cta { border-color: var(--ink); }
-.mastnav a.is-cta:hover { background: var(--ink); color: var(--ground); }
+.mastnav a:hover { border-color: var(--line); }
+.mastnav a.is-cta { border-color: var(--line); }
+.mastnav a.is-cta:hover { background: var(--fill); color: var(--fill-ink); }
 @media (max-width: 700px) {
   .mastnav .opt { display: none; }
   .brand__sub { display: none; }
@@ -326,7 +392,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   text-decoration: none;
   white-space: nowrap;
 }
-.bigbtn:hover { background: var(--ink); color: var(--ground); }
+.bigbtn:hover { background: var(--fill); color: var(--fill-ink); }
 
 /* ---- about and footer ---------------------------------------------- */
 
@@ -406,7 +472,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   flex: none; border-left: var(--rule); padding: 0 var(--s4); cursor: pointer;
   font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
 }
-.find button:hover { background: var(--ink); color: var(--ground); }
+.find button:hover { background: var(--fill); color: var(--fill-ink); }
 
 .hint {
   display: flex; flex-wrap: wrap; gap: var(--s2) var(--s4); justify-content: space-between;
@@ -439,7 +505,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   align-items: center; gap: 7px; white-space: nowrap;
 }
 .chip:hover { border-width: 2px; padding: 6px 10px; }
-.chip[aria-pressed='true'] { background: var(--ink); color: var(--ground); }
+.chip[aria-pressed='true'] { background: var(--fill); color: var(--fill-ink); }
 .chip i { font-style: normal; font-size: 11px; font-feature-settings: var(--lining); }
 
 /* ---- refine, closed by default -------------------------------------- */
@@ -483,8 +549,8 @@ button { font: inherit; color: inherit; background: none; border: none; }
   width: 100%; text-align: left; padding: 5px 5px 5px 0; font-size: 13px; cursor: pointer;
   min-height: 28px; border-bottom: 1px solid transparent;
 }
-.group li button:hover { border-bottom-color: var(--ink); }
-.group li button[aria-pressed='true'] { background: var(--ink); color: var(--ground); padding-left: 5px; }
+.group li button:hover { border-bottom-color: var(--line); }
+.group li button[aria-pressed='true'] { background: var(--fill); color: var(--fill-ink); padding-left: 5px; }
 .group li i { font-style: normal; font-size: 11px; font-feature-settings: var(--lining); }
 .group__more { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 6px 0; }
 .group__more:hover { text-decoration: underline; }
@@ -502,7 +568,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   padding: 4px 8px; font-size: 12px; cursor: pointer; background: none; color: inherit;
   min-height: 26px;
 }
-.pill:hover { background: var(--ink); color: var(--ground); }
+.pill:hover { background: var(--fill); color: var(--fill-ink); }
 .pill b { font-weight: 600; }
 
 /* ---- results --------------------------------------------------------- */
@@ -531,7 +597,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   cursor: pointer; font-size: 12px; letter-spacing: 0.01em; padding: 3px 0;
   border-bottom: 1px solid transparent; min-height: 24px;
 }
-.g__meta button:hover { border-bottom-color: var(--ink); }
+.g__meta button:hover { border-bottom-color: var(--line); }
 .g__meta button.is-field { font-weight: 700; }
 .g__meta span { padding: 3px 0; }
 .g__links { display: flex; flex-wrap: wrap; gap: var(--s4); margin-top: var(--s2); font-size: 12px; }
@@ -555,7 +621,7 @@ button { font: inherit; color: inherit; background: none; border: none; }
   margin-top: var(--s5); font-size: 12px; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; cursor: pointer;
 }
-.more:hover { background: var(--ink); color: var(--ground); }
+.more:hover { background: var(--fill); color: var(--fill-ink); }
 
 /* ---- credit band ----------------------------------------------------- */
 
@@ -615,3 +681,34 @@ button { font: inherit; color: inherit; background: none; border: none; }
   .results .state { margin-top: 0; border-top: none; padding-top: 0; }
   .results .grants { margin-top: var(--s4); }
 }
+
+/* Secondary text takes the softer ink. In light mode --ink-soft is #000, so
+   this changes nothing there; in dark mode it drops these to 7:1, still AAA,
+   and stops the page reading as a wall of bright text. */
+.hint,
+.chip i,
+.group li i,
+.g__where,
+.diagram__note,
+.foot__base { color: var(--ink-soft); }
+
+/* ---- theme control --------------------------------------------------- */
+
+.theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  padding: 8px 11px;
+  min-height: 36px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.theme:hover { background: var(--fill); color: var(--fill-ink); }
+.theme svg { width: 13px; height: 13px; flex: none; }
+/* Transitions between these two grounds would pass through grey, so there are
+   none. The switch is instant by design. */

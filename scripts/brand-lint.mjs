@@ -34,6 +34,24 @@ const waived = []
 const note = (file, rule, detail) => problems.push({ file: path.relative(root, file), rule, detail })
 
 /**
+ * The dark mode palette, listed value by value.
+ *
+ * Light mode is still strictly two ink. Dark mode is not, deliberately: pure
+ * white on pure black is 21:1, which haloes and tires the eye over a long
+ * list. These exact values are permitted and nothing else is, so a stray grey
+ * still fails the build.
+ */
+const DARK_PALETTE = new Set([
+  '#141414', // page ground
+  '#1e1e1e', // raised band
+  '#e6e6e6', // body ink, 14.8:1
+  '#a0a0a0', // secondary ink, 7.1:1
+  '#666', '#666666', // borders and rules, 3.2:1
+  '#2f2f2f', // selected fill
+  '#3a3a3a', // selected fill inside a band
+])
+
+/**
  * One standing exception, named rather than hidden.
  *
  * Next.js bundles the palette for its own crash and not found screens into the
@@ -46,7 +64,8 @@ const isFrameworkDeadCode = (text, index) =>
   text.slice(Math.max(0, index - 400), index + 200).includes('--next-error-')
 
 const check = (file, text, index, rule, detail) => {
-  if (isFrameworkDeadCode(text, index)) waived.push(`${rule}: ${detail}`)
+  if (DARK_PALETTE.has(String(detail).toLowerCase())) waived.push(`dark mode palette: ${detail}`)
+  else if (isFrameworkDeadCode(text, index)) waived.push(`${rule}: ${detail}`)
   else note(file, rule, detail)
 }
 
@@ -119,6 +138,7 @@ if (problems.length) {
   process.exit(1)
 }
 console.log(`Brand lint clean across ${files.length} built files and ${sources.length} source files.`)
-if (waived.length) {
-  console.log(`  ${waived.length} values waived as unreachable framework chrome (see isFrameworkDeadCode).`)
-}
+const dark = waived.filter((w) => w.startsWith('dark mode palette')).length
+const chrome = waived.length - dark
+if (dark) console.log(`  ${dark} values waived as the dark mode palette (see DARK_PALETTE).`)
+if (chrome) console.log(`  ${chrome} values waived as unreachable framework chrome (see isFrameworkDeadCode).`)

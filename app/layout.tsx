@@ -33,13 +33,28 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  // The masthead is black on every screen; there is no light and dark mode.
-  themeColor: '#000000',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#141414' },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/*
+          Runs before first paint. The site is a static export, so the HTML
+          arrives before React does; without this a reader who chose dark on a
+          light machine would get a white flash on every page load.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t)}}catch(e){}",
+          }}
+        />
+      </head>
       <body>
         <a className="skip" href="#grants">Skip to the grantees</a>
         {children}
