@@ -13,8 +13,21 @@ export const metadata: Metadata = {
   applicationName: 'The Emergent Ventures Gazetteer',
   authors: [{ name: 'Adnan Abbasi', url: 'https://thothica.com' }],
   icons: { icon: '/brand/thothica-thumb-black.png', apple: '/brand/thothica-thumb-black.png' },
-  openGraph: { title, description, url, siteName: title, type: 'website' },
-  twitter: { card: 'summary', title, description },
+  openGraph: {
+    title,
+    description,
+    url,
+    siteName: title,
+    type: 'website',
+    // WhatsApp and Slack want the dimensions declared or they may skip the card.
+    images: [{ url: '/og.png', width: 1200, height: 630, type: 'image/png', alt: title }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    images: ['/og.png'],
+  },
 }
 
 export const viewport: Viewport = {
