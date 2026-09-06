@@ -16,5 +16,9 @@
   // Query embeddings at request time, same model as the build step.
   "ai": { "binding": "AI" },
 
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+
+  // Custom domain on the thothica.com zone. Wrangler creates and manages the
+  // DNS record for this hostname.
+  "routes": [{ "pattern": "evwinners.thothica.com", "custom_domain": true }]
 }
