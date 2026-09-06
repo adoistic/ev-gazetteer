@@ -1,16 +1,16 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
-const title = 'Emergent Ventures beyond the main series'
+const title = 'The Emergent Ventures Gazetteer'
 const description =
-  'The 469 Emergent Ventures grantees from the India, Africa and Caribbean, Covid prize and progress studies tranches, searchable by meaning.'
+  'Every Emergent Ventures grant, read and classified by field, by what was made and by where. Built on Nabeel Qureshi\'s dataset.'
 const url = 'https://evwinners.thothica.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
   title,
   description,
-  applicationName: 'Emergent Ventures beyond the main series',
+  applicationName: 'The Emergent Ventures Gazetteer',
   authors: [{ name: 'Adnan Abbasi', url: 'https://thothica.com' }],
   icons: { icon: '/brand/thothica-thumb-black.png', apple: '/brand/thothica-thumb-black.png' },
   openGraph: { title, description, url, siteName: title, type: 'website' },
@@ -20,17 +20,15 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
+  // The masthead is black on every screen; there is no light and dark mode.
+  themeColor: '#000000',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <a className="skip" href="#grantees">Skip to the grantees</a>
+        <a className="skip" href="#grants">Skip to the grantees</a>
         {children}
       </body>
     </html>

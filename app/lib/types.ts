@@ -1,59 +1,68 @@
-export type ProgrammeId = 'india' | 'africa' | 'covid' | 'progress'
-
-export type Winner = {
+export type Grant = {
   id: number
   name: string
   batch: string
-  programme: ProgrammeId
+  series: string
+  tranche: string | null
   date: string | null
   link: string | null
   description: string | null
-  type: string | null
-  career_stage: string | null
   personal_info: string | null
   personal_links: string[]
   project_links: string[]
-  mr_posts: string[]
+  fields: string[]
+  topics: string[]
+  outputs: string[]
+  purpose: string
+  country: string | null
+  origin: string | null
+  stage: string
+  age: number | null
+  org: string | null
+  people: string[]
+  team: string | null
 }
 
-export type Programme = { id: ProgrammeId; label: string; short: string; blurb: string }
+export type Person = {
+  key: string
+  name: string
+  grants: number[]
+  repeat: boolean
+  mergeNote: string | null
+  jointNotes: string[]
+}
 
-export const PROGRAMMES: Programme[] = [
-  {
-    id: 'india',
-    label: 'India',
-    short: 'India',
-    blurb: 'Running since 2020 and by far the largest of the four.',
-  },
-  {
-    id: 'africa',
-    label: 'Africa and Caribbean',
-    short: 'Africa',
-    blurb: 'Grants across Africa and the Caribbean.',
-  },
-  {
-    id: 'covid',
-    label: 'Covid prizes',
-    short: 'Covid',
-    blurb: 'Fast prizes for work that helped during the pandemic.',
-  },
-  {
-    id: 'progress',
-    label: 'Progress studies',
-    short: 'Progress',
-    blurb: 'One tranche for people studying how progress happens.',
-  },
-]
+export type FacetValue = { id: string; label: string; count: number }
 
-/** The main series, which this site does not hold. */
-export const MAIN = {
-  winners: 797,
-  cohorts: 58,
+export type Gazetteer = {
+  grants: Grant[]
+  people: Person[]
+  uncertain: { ids: number[]; names: string[]; note: string }[]
+  facets: Record<string, FacetValue[]>
+  vocab: { field: Record<string, string>; output: Record<string, string>; purpose: Record<string, string>; stage: Record<string, string> }
+  series: { id: string; label: string }[]
+  tranches: { id: string; label: string }[]
+  updated: string
+}
+
+/** The facets offered in the interface, in the order they appear. */
+export const FACETS = [
+  { key: 'field', label: 'Field', initial: 10 },
+  { key: 'output', label: 'What they made', initial: 8 },
+  { key: 'purpose', label: 'Kind of grant', initial: 5 },
+  { key: 'stage', label: 'Stage', initial: 6 },
+  { key: 'series', label: 'Series', initial: 5 },
+  { key: 'tranche', label: 'Tranche', initial: 4 },
+  { key: 'country', label: 'Country', initial: 10 },
+  { key: 'topic', label: 'Topic', initial: 10 },
+] as const
+
+export const NABEEL = {
   site: 'https://evwinners.org',
   repo: 'https://github.com/nqureshi/ev-winners',
-  author: 'https://nabeelqu.co',
+  home: 'https://nabeelqu.co',
+  name: 'Nabeel S. Qureshi',
 }
 
 export const THOTHICA = 'https://thothica.com'
-/** Adnan's own grantee row, so the about section can point at it. */
 export const ADNAN_ID = 1070

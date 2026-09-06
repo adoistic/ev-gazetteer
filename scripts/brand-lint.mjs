@@ -57,8 +57,18 @@ for (const file of files) {
   const isCode = /\.(css|html|js)$/.test(file)
 
   if (isCode) {
-    for (const m of text.matchAll(/#[0-9a-fA-F]{3,8}\b/g)) {
-      if (!OK_COLOR.test(m[0])) check(file, text, m.index, 'non black and white hex', m[0])
+    // A hex is only a colour where CSS can see it. Grantee descriptions quote
+    // things like "#6394", which is text, not a palette violation.
+    const styleZones = /\.(css|js)$/.test(file)
+      ? [{ start: 0, text }]
+      : [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>|style="([^"]*)"/g)].map((m) => ({
+          start: m.index + m[0].indexOf(m[1] ?? m[2] ?? ''),
+          text: m[1] ?? m[2] ?? '',
+        }))
+    for (const zone of styleZones) {
+      for (const m of zone.text.matchAll(/#[0-9a-fA-F]{3,8}\b/g)) {
+        if (!OK_COLOR.test(m[0])) check(file, text, zone.start + m.index, 'non black and white hex', m[0])
+      }
     }
     for (const m of text.matchAll(/rgba?\([^)]*\)/g)) {
       // rgb(0 0 0) and rgb(255 255 255) are still two ink; alpha never is.

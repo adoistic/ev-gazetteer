@@ -1,73 +1,84 @@
-# Emergent Ventures beyond the main series
+# The Emergent Ventures Gazetteer
 
-The 469 Emergent Ventures grantees from the four regional and thematic
-tranches, searchable by meaning. Built by Adnan Abbasi, Founder and CEO of
-[Thothica](https://thothica.com).
+Every Emergent Ventures grant, read and classified. Live at
+[evwinners.thothica.com](https://evwinners.thothica.com).
 
-Inspired by [Nabeel Qureshi's Emergent Ventures Winners](https://evwinners.org),
-which covers the numbered cohorts and supplied both the data and the idea. For
-cohorts 1 to 58, go there.
+This extends [Nabeel Qureshi's Emergent Ventures Winners](https://evwinners.org),
+which collected all 1,266 grantees and their announcement posts and built the
+search that made them findable. It does not replace it. Corrections belong
+upstream in [his repository](https://github.com/nqureshi/ev-winners), where both
+sites read from.
 
-| Programme | Grantees |
+## What it adds
+
+The source data carries a subject for 18 per cent of grants and a career stage
+for 3 per cent. Every entry was read and classified along seven facets:
+
+| Facet | What it holds |
 |---|---|
-| India | 345 |
-| Africa and Caribbean | 104 |
-| Covid prizes | 11 |
-| Progress studies | 9 |
+| Field | 25 controlled values, one to three per grant |
+| What they made | Startup, nonprofit, book, podcast, hardware, dataset, and eleven more |
+| Kind of grant | Project, career development, travel, prize, institutional support |
+| Stage | School, undergraduate, graduate, postdoc, academic, founder, writer, professional, independent |
+| Series and tranche | Including four tranches announced only in prose |
+| Place | Country of work and of origin |
+| Person | Identity resolved across cohorts, so repeat winners read as one person |
 
-The split is mechanical: a batch whose name is entirely digits belongs to the
-main series and is excluded. Everything else is kept, so a new tranche needs no
-code change.
+Reading rather than pattern matching is what turned up the parts the data does
+not state: Ukraine, archaeology, science education and science communication
+tranches announced inside numbered cohorts; 45 people holding more than one
+grant, some under different spellings; and joint grants that share a
+description between several people without being the same person.
+
+The classification is judgement, not fact. Where a description does not support
+a value it is left blank rather than guessed, and where two rows might be one
+person but the evidence does not settle it they stay separate and the doubt is
+recorded in `data/identity.json`.
 
 ## How it works
 
-Three pieces.
+**Build step.** `npm run data` reads `data/ev-winners.csv` and
+`data/classification/*.psv`, checks every tag against `data/vocabulary.json`,
+resolves people using `data/identity.json`, and embeds each grant through
+Workers AI. It authenticates with your existing wrangler login by running
+`scripts/embed-worker.js` under `wrangler dev --remote`, so no API token is
+stored anywhere. Vectors are cached by a hash of the text, so a rebuild that
+changes no wording re-embeds nothing.
 
-**Build step.** `npm run data` reads `data/ev-winners.csv`, drops the main
-series, and embeds each remaining grantee through Workers AI. It authenticates
-with your existing wrangler login by running `scripts/embed-worker.js` under
-`wrangler dev --remote`, so no API token is stored anywhere. It writes
-`app/data/winners.json`, `public/embeddings.bin` and `public/embeddings.json`,
-all in one row order.
+The classification goes into the embedded text on purpose. A two letter query
+like "AI" is weak input on its own; the tags give it something exact to match.
 
-**Static site.** Next.js with `output: 'export'`. One page, prerendered with all
-469 records inline, so filtering and name lookup need no request. Fonts are self
-hosted, so there is no CDN dependency at build or at runtime.
+**Static site.** Next.js with `output: 'export'`. One page, prerendered with
+every record inline, so facets and name matching need no request. Fonts are
+self hosted.
 
-**Search worker.** `worker/index.ts` answers `GET /api/search?q=`. It embeds the
-query with the same model, loads the vector matrix once per isolate through the
-`ASSETS` binding, scans by dot product, and returns ids and scores only. The
-browser already holds the metadata.
+**Search worker.** `worker/index.ts` answers `GET /api/search?q=`, embedding the
+query with the same model, scanning the vector matrix, and returning ids and
+scores only.
 
 ## Commands
 
 ```bash
 npm install
-npm run data          # regenerate winners.json and the embedding matrix
+npm run data          # rebuild gazetteer.json and the embedding matrix
 npm run build         # static export into out/
 npm run preview       # build, then serve the whole thing on wrangler dev
-npm run test          # data and filter tests
+npm run test          # tranche detection tests
 npm run lint:brand    # two ink and voice rules, over the built output
 npm run deploy        # build and deploy to Cloudflare
+node scripts/validate-classification.mjs   # vocabulary check and a distribution report
 ```
 
 ## Two things to keep true
 
 **The model must match on both sides.** `scripts/embed.mjs` and
 `worker/index.ts` both name `@cf/baai/bge-base-en-v1.5`. Change one and ranking
-degrades quietly rather than failing. The check is that a grantee's own text,
-sent through `/api/search`, ranks that grantee first with a score above 0.95.
+degrades quietly. The check is that a grant's own text, sent through
+`/api/search`, ranks that grant first above 0.95.
 
 **The palette is two inks.** `npm run lint:brand` checks the built output for
 any hex outside black and white, any alpha, any opacity below 1, any gradient
 other than the permitted hatch, and any dash or banned word in our own copy.
-Grantee descriptions are quoted from the announcement posts and are not ours to
-rewrite, so the voice rules run over source files rather than rendered text.
-
-## Data
-
-`data/ev-winners.csv` is a snapshot of the shared dataset. Corrections belong
-upstream at [nqureshi/ev-winners](https://github.com/nqureshi/ev-winners) so
-both sites benefit. Pull the updated CSV in, then run `npm run data`.
+There are no light and dark modes; sections invert instead.
 
 Not affiliated with Emergent Ventures or the Mercatus Center.

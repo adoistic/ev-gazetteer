@@ -1,41 +1,37 @@
 import Masthead from './components/Masthead'
 import ProgrammeDiagram from './components/ProgrammeDiagram'
 import Explorer from './components/Explorer'
-import Elsewhere from './components/Elsewhere'
+import Credit from './components/Credit'
 import About from './components/About'
 import Footer from './components/Footer'
-import { ADNAN_ID, PROGRAMMES, type ProgrammeId, type Winner } from './lib/types'
-import { formatLongDate } from './lib/format'
-import data from './data/winners.json'
+import type { Gazetteer } from './lib/types'
+import raw from './data/gazetteer.json'
 
-const winners = data as Winner[]
+const data = raw as unknown as Gazetteer
 
 export default function Page() {
-  const counts = Object.fromEntries(
-    PROGRAMMES.map((p) => [p.id, winners.filter((w) => w.programme === p.id).length])
-  ) as Record<ProgrammeId, number>
-
-  const dates = winners.map((w) => w.date).filter(Boolean) as string[]
-  const latest = dates.reduce((a, b) => (a > b ? a : b))
+  const dates = data.grants.map((g) => g.date).filter(Boolean) as string[]
   const earliest = dates.reduce((a, b) => (a < b ? a : b))
-  const builder = winners.find((w) => w.id === ADNAN_ID)
-  const tranches = new Set(winners.map((w) => w.batch)).size
+  const latest = data.updated
+  const repeat = data.people.filter((p) => p.repeat).length
+  const countries = data.facets.country.length
 
   return (
     <>
       <Masthead />
       <main>
-        <section className="hero">
+        <section className="hero inverse">
           <div className="shell hero__grid">
             <div>
               <p className="eyebrow">Emergent Ventures</p>
               <h1>
-                The regional and <em>thematic</em> cohorts
+                Every winner, <em>classified</em>
               </h1>
             </div>
             <div>
               <p className="narration">
-                Four tranches, {winners.length} people, and everything the numbered cohorts leave out.
+                All {data.grants.length.toLocaleString('en-GB')} grants, read one by one and sorted by field,
+                by what was made, and by where.
               </p>
             </div>
           </div>
@@ -43,16 +39,16 @@ export default function Page() {
           <div className="shell" style={{ marginTop: 'var(--s7)' }}>
             <dl className="stats">
               <div className="stat">
-                <dt>Grantees</dt>
-                <dd className="num">{winners.length}</dd>
+                <dt>Grants</dt>
+                <dd className="num">{data.grants.length.toLocaleString('en-GB')}</dd>
               </div>
               <div className="stat">
-                <dt>Programmes</dt>
-                <dd className="num">{PROGRAMMES.length}</dd>
+                <dt>People</dt>
+                <dd className="num">{data.people.length.toLocaleString('en-GB')}</dd>
               </div>
               <div className="stat">
-                <dt>Tranches</dt>
-                <dd className="num">{tranches}</dd>
+                <dt>Countries</dt>
+                <dd className="num">{countries}</dd>
               </div>
               <div className="stat">
                 <dt>Announced</dt>
@@ -64,12 +60,20 @@ export default function Page() {
           </div>
         </section>
 
-        <ProgrammeDiagram counts={counts} />
-        <Explorer winners={winners} />
-        <Elsewhere />
-        <About builder={builder} updated={formatLongDate(latest)} />
+        <ProgrammeDiagram
+          series={data.facets.series}
+          tranches={data.facets.tranche}
+          total={data.grants.length}
+        />
+
+        <Explorer data={data} />
+        <Credit grants={data.grants.length} />
+        <About data={data} />
       </main>
-      <Footer updated={formatLongDate(latest)} />
+      <Footer updated={latest} />
+      <p className="sr-note">
+        {repeat} people hold more than one grant.
+      </p>
     </>
   )
 }

@@ -189,6 +189,9 @@ function buildFacets(grants, vocab) {
       .map(([id, count]) => ({ id, label: label ? label(id) : id, count }))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
 
+  const countries = new Set([...tally((g) => g.country).keys()].map((c) => c.toLowerCase()))
+  const purposes = new Set(Object.values(vocab.purpose).map((p) => p.toLowerCase()))
+
   return {
     field: asList(tally((g) => g.fields), (id) => vocab.field[id]),
     output: asList(tally((g) => g.outputs), (id) => vocab.output[id]),
@@ -197,9 +200,12 @@ function buildFacets(grants, vocab) {
     series: asList(tally((g) => g.series), (id) => SERIES.find((s) => s.id === id)?.label ?? id),
     tranche: asList(tally((g) => g.tranche), (id) => TRANCHES.find((t) => t.id === id)?.label ?? id),
     country: asList(tally((g) => g.country)),
-    // The long tail of topics is for search, not for browsing. Only topics
-    // with enough grants behind them earn a place in the interface.
-    topic: asList(tally((g) => g.topics)).filter((t) => t.count >= 4),
+    // The long tail of topics is for search, not for browsing. A topic earns a
+    // place in the interface only if enough grants carry it and it is not
+    // already a country or a kind of grant, which have facets of their own.
+    topic: asList(tally((g) => g.topics)).filter(
+      (t) => t.count >= 4 && !countries.has(t.id.toLowerCase()) && !purposes.has(t.id.toLowerCase())
+    ),
   }
 }
 

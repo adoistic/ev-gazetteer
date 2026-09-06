@@ -1,38 +1,29 @@
-import { MAIN, PROGRAMMES, type ProgrammeId } from '../lib/types'
-
-type Counts = Record<ProgrammeId, number>
+import type { FacetValue } from '../lib/types'
 
 /**
- * The scope argument, drawn rather than written: Emergent Ventures branches
- * into a numbered main series and four regional and thematic tranches.
+ * The shape of the programme, drawn from the data rather than asserted.
  *
- * Encoding: a solid border means the grantees are on this site. A dashed
- * border with a hatched marker strip means they are held at evwinners.org.
- * The hatch is a marker on the edge rather than a fill, so nothing sits on
- * top of it and every label stays on clean ground.
+ * The lower band is the part that reading turned up: tranches announced
+ * inside numbered cohorts and marked only by a phrase in the announcement
+ * text, so they are invisible to anything that reads the batch column.
  *
- * Orientation follows the canvas. Below 900px the drawing is replaced by a
- * vertical rail rather than squeezed into one.
+ * Solid borders are series taken from the batch column. Dashed borders with a
+ * hatched marker are tranches recovered from prose.
  */
-export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
-  const rows = [
-    {
-      key: 'main',
-      label: `Main series, cohorts 1 to ${MAIN.cohorts}`,
-      shortLabel: `Main series, 1 to ${MAIN.cohorts}`,
-      count: MAIN.winners,
-      here: false,
-    },
-    ...PROGRAMMES.map((p) => ({
-      key: p.id,
-      label: p.label,
-      shortLabel: p.label,
-      count: counts[p.id],
-      here: true,
-    })),
-  ]
-
-  const label = `Emergent Ventures divides into the main series of ${MAIN.winners} winners, held at evwinners.org, and four tranches held here: ${PROGRAMMES.map((p) => `${p.label}, ${counts[p.id]}`).join('; ')}.`
+export default function ProgrammeDiagram({
+  series,
+  tranches,
+  total,
+}: {
+  series: FacetValue[]
+  tranches: FacetValue[]
+  total: number
+}) {
+  const label = `Emergent Ventures has ${total} grants across ${series.length} series: ${series
+    .map((s) => `${s.label}, ${s.count}`)
+    .join('; ')}. Inside the numbered cohorts sit further tranches: ${tranches
+    .map((t) => `${t.label}, ${t.count}`)
+    .join('; ')}.`
 
   return (
     <section className="diagram" aria-labelledby="dg-h">
@@ -41,17 +32,17 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
           <div>
             <p className="eyebrow">How the programme divides</p>
             <h2 id="dg-h" style={{ fontSize: 'clamp(1.7rem, 4vw, 2.4rem)', marginTop: 'var(--s2)' }}>
-              Five branches, four of them here
+              Five series, and four tranches hiding inside them
             </h2>
           </div>
           <p className="diagram__note">
-            Solid means the grantees are on this site. The hatched marker means they are held at
-            evwinners.org, where the main series is already covered properly.
+            The series are named in the data. The tranches below are not: they are announced inside
+            numbered cohorts and marked only by a phrase in the announcement text, so they turn up
+            only if you read all 1,266 entries.
           </p>
         </div>
 
-        {/* Wide: a spine with one row per branch. */}
-        <svg className="dg-wide" viewBox="0 0 1180 372" role="img" aria-label={label}>
+        <svg className="dg-wide" viewBox="0 0 1180 470" role="img" aria-label={label}>
           <defs>
             <pattern id="dg-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <rect width="6" height="6" className="dg-ground" />
@@ -59,43 +50,58 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
             </pattern>
           </defs>
 
-          <rect x="1" y="140" width="236" height="92" fill="none" stroke="currentColor" strokeWidth="2" />
-          <text x="20" y="176" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Emergent</text>
-          <text x="20" y="204" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Ventures</text>
-          <text x="20" y="224" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="10" fontWeight="700" letterSpacing="2" fill="currentColor">
+          <rect x="1" y="120" width="226" height="92" fill="none" stroke="currentColor" strokeWidth="2" />
+          <text x="20" y="156" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Emergent</text>
+          <text x="20" y="184" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Ventures</text>
+          <text x="20" y="204" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="10" fontWeight="700" letterSpacing="2" fill="currentColor">
             MERCATUS CENTER, SINCE 2018
           </text>
+          <line x1="227" y1="166" x2="276" y2="166" stroke="currentColor" strokeWidth="2" />
+          <line x1="276" y1="30" x2="276" y2="302" stroke="currentColor" strokeWidth="2" />
 
-          <line x1="237" y1="186" x2="286" y2="186" stroke="currentColor" strokeWidth="2" />
-          <line x1="286" y1="30" x2="286" y2="342" stroke="currentColor" strokeWidth="2" />
-
-          {rows.map((r, i) => {
-            const y = 30 + i * 78
+          {series.map((s, i) => {
+            const y = 30 + i * 68
             return (
-              <g key={r.key}>
-                <line x1="286" y1={y} x2="336" y2={y} stroke="currentColor" strokeWidth={r.here ? 2 : 1}
-                      strokeDasharray={r.here ? undefined : '5 4'} />
-                <rect x="336" y={y - 28} width="843" height="56" fill="none" stroke="currentColor"
-                      strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '5 4'} />
-                {!r.here && <rect x="337" y={y - 27} width="16" height="54" fill="url(#dg-hatch)" />}
-                <text x="372" y={y + 7} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="17" fontWeight="700" fill="currentColor">
-                  {r.label}
+              <g key={s.id}>
+                <line x1="276" y1={y} x2="326" y2={y} stroke="currentColor" strokeWidth="2" />
+                <rect x="326" y={y - 24} width="853" height="48" fill="none" stroke="currentColor" strokeWidth="2" />
+                <text x="350" y={y + 6} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="16" fontWeight="700" fill="currentColor">
+                  {s.label}
                 </text>
-                <text x="1092" y={y + 5} textAnchor="end" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9"
-                      fontWeight="700" letterSpacing="1.6" fill="currentColor">
-                  {r.here ? 'HERE' : 'AT EVWINNERS.ORG'}
-                </text>
-                <text x="1163" y={y + 11} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="30"
+                <text x="1163" y={y + 9} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="27"
                       fill="currentColor" style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
-                  {r.count}
+                  {s.count}
+                </text>
+              </g>
+            )
+          })}
+
+          <text x="326" y="378" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="10" fontWeight="700"
+                letterSpacing="2" fill="currentColor">
+            ANNOUNCED INSIDE COHORTS, NOT IN THE DATA
+          </text>
+          <line x1="326" y1="390" x2="1179" y2="390" stroke="currentColor" strokeWidth="1" strokeDasharray="5 4" />
+
+          {tranches.map((t, i) => {
+            const w = 213
+            const x = 326 + i * w
+            return (
+              <g key={t.id}>
+                <rect x={x} y="406" width={w - 10} height="48" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="5 4" />
+                <rect x={x + 1} y="407" width="14" height="46" fill="url(#dg-hatch)" />
+                <text x={x + 26} y="428" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="13" fontWeight="700" fill="currentColor">
+                  {t.label}
+                </text>
+                <text x={x + 26} y="444" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="18" fill="currentColor"
+                      style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
+                  {t.count}
                 </text>
               </g>
             )
           })}
         </svg>
 
-        {/* Narrow: a vertical rail, redrawn rather than squeezed. */}
-        <svg className="dg-tall" viewBox="0 0 380 470" role="img" aria-label={label}>
+        <svg className="dg-tall" viewBox="0 0 380 640" role="img" aria-label={label}>
           <defs>
             <pattern id="dg-hatch2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <rect width="6" height="6" className="dg-ground" />
@@ -103,34 +109,49 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
             </pattern>
           </defs>
 
-          <rect x="1" y="1" width="378" height="62" fill="none" stroke="currentColor" strokeWidth="2" />
-          <text x="16" y="34" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="24" fill="currentColor">Emergent Ventures</text>
-          <text x="16" y="52" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700" letterSpacing="1.8" fill="currentColor">
+          <rect x="1" y="1" width="378" height="60" fill="none" stroke="currentColor" strokeWidth="2" />
+          <text x="16" y="33" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="23" fill="currentColor">Emergent Ventures</text>
+          <text x="16" y="50" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700" letterSpacing="1.6" fill="currentColor">
             MERCATUS CENTER, SINCE 2018
           </text>
+          <line x1="24" y1="61" x2="24" y2="336" stroke="currentColor" strokeWidth="2" />
 
-          <line x1="26" y1="63" x2="26" y2="446" stroke="currentColor" strokeWidth="2" />
-
-          {rows.map((r, i) => {
-            const y = 108 + i * 72
+          {series.map((s, i) => {
+            const y = 100 + i * 58
             return (
-              <g key={r.key}>
-                <line x1="26" y1={y} x2="52" y2={y} stroke="currentColor" strokeWidth={r.here ? 2 : 1}
-                      strokeDasharray={r.here ? undefined : '4 3'} />
-                <circle cx="26" cy={y} r="5" fill="currentColor" />
-                <rect x="52" y={y - 26} width="327" height="52" fill="none" stroke="currentColor"
-                      strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '4 3'} />
-                {!r.here && <rect x="53" y={y - 25} width="12" height="50" fill="url(#dg-hatch2)" />}
-                <text x="76" y={y - 2} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="13" fontWeight="700" fill="currentColor">
-                  {r.shortLabel}
+              <g key={s.id}>
+                <line x1="24" y1={y} x2="50" y2={y} stroke="currentColor" strokeWidth="2" />
+                <circle cx="24" cy={y} r="4" fill="currentColor" />
+                <rect x="50" y={y - 21} width="329" height="42" fill="none" stroke="currentColor" strokeWidth="2" />
+                <text x="64" y={y + 5} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="13" fontWeight="700" fill="currentColor">
+                  {s.label}
                 </text>
-                <text x="76" y={y + 14} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700"
-                      letterSpacing="1.4" fill="currentColor">
-                  {r.here ? 'HERE' : 'AT EVWINNERS.ORG'}
-                </text>
-                <text x="370" y={y + 8} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="24"
+                <text x="368" y={y + 8} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="22"
                       fill="currentColor" style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
-                  {r.count}
+                  {s.count}
+                </text>
+              </g>
+            )
+          })}
+
+          <text x="0" y="412" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700"
+                letterSpacing="1.6" fill="currentColor">
+            ANNOUNCED INSIDE COHORTS
+          </text>
+          <line x1="0" y1="422" x2="379" y2="422" stroke="currentColor" strokeWidth="1" strokeDasharray="4 3" />
+
+          {tranches.map((t, i) => {
+            const y = 444 + i * 50
+            return (
+              <g key={t.id}>
+                <rect x="0" y={y} width="379" height="42" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 3" />
+                <rect x="1" y={y + 1} width="12" height="40" fill="url(#dg-hatch2)" />
+                <text x="26" y={y + 26} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="12" fontWeight="700" fill="currentColor">
+                  {t.label}
+                </text>
+                <text x="368" y={y + 28} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="20"
+                      fill="currentColor" style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
+                  {t.count}
                 </text>
               </g>
             )

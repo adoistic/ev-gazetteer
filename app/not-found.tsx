@@ -1,5 +1,5 @@
 import Masthead from './components/Masthead'
-import { MAIN } from './lib/types'
+import { NABEEL } from './lib/types'
 
 /**
  * Replaces the framework's default not found page, which ships its own grey
@@ -19,8 +19,8 @@ export default function NotFound() {
         </p>
         <p style={{ marginTop: 'var(--s6)', display: 'flex', gap: 'var(--s3)', flexWrap: 'wrap' }}>
           <a className="bigbtn" href="/">Back to the grantees</a>
-          <a className="bigbtn" href={MAIN.site} target="_blank" rel="noopener noreferrer">
-            Main series
+          <a className="bigbtn" href={NABEEL.site} target="_blank" rel="noopener noreferrer">
+            evwinners.org
           </a>
         </p>
       </main>

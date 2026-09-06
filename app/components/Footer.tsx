@@ -1,47 +1,35 @@
-import { MAIN, THOTHICA } from '../lib/types'
+import { NABEEL, THOTHICA } from '../lib/types'
+import { formatLongDate } from '../lib/format'
 
-export default function Footer({ updated }: { updated: string | null }) {
+export default function Footer({ updated }: { updated: string }) {
   return (
-    <footer className="foot">
+    <footer className="foot inverse">
       <div className="shell">
         <div className="foot__grid">
           <div>
-            <a href={THOTHICA} target="_blank" rel="noopener noreferrer">
-              <picture>
-                <source srcSet="/brand/thothica-logo-white.png" media="(prefers-color-scheme: dark)" />
-                <img className="foot__logo" src="/brand/thothica-logo-black.png" alt="Thothica" height={26} />
-              </picture>
-            </a>
             <p className="foot__built">
               Built by <b>Adnan</b>, Founder and CEO, Thothica.
             </p>
             <p className="foot__note">
-              Inspired by{' '}
-              <a className="link" href={MAIN.site} target="_blank" rel="noopener noreferrer">
-                Nabeel Qureshi&rsquo;s Emergent Ventures Winners
+              Extending{' '}
+              <a className="link" href={NABEEL.site} target="_blank" rel="noopener noreferrer">
+                {NABEEL.name}&rsquo;s Emergent Ventures Winners
               </a>
-              , which covers the numbered cohorts and supplied the data and the idea behind this one.
+              , which collected the grantees and their announcement posts. This site adds the classification on top.
             </p>
           </div>
 
           <div className="foot__meta">
-            <span>
-              <a className="link" href={MAIN.site} target="_blank" rel="noopener noreferrer">evwinners.org</a>
-              {' '}for cohorts 1 to {MAIN.cohorts}
-            </span>
-            <span>
-              <a className="link" href={MAIN.repo} target="_blank" rel="noopener noreferrer">Source data on GitHub</a>
-            </span>
-            <span>
-              <a className="link" href={THOTHICA} target="_blank" rel="noopener noreferrer">thothica.com</a>
-            </span>
-            <span className="num">Updated {updated ?? 'recently'}</span>
+            <span><a className="link" href={NABEEL.site} target="_blank" rel="noopener noreferrer">evwinners.org</a></span>
+            <span><a className="link" href={NABEEL.repo} target="_blank" rel="noopener noreferrer">Source data on GitHub</a></span>
+            <span><a className="link" href={THOTHICA} target="_blank" rel="noopener noreferrer">thothica.com</a></span>
+            <span className="num">Updated {formatLongDate(updated)}</span>
           </div>
         </div>
 
         <div className="foot__base">
           <span>Not affiliated with Emergent Ventures or the Mercatus Center.</span>
-          <span>Grantee data from the announcement posts on Marginal Revolution.</span>
+          <span>Classification is machine-assisted and reviewed. Descriptions are quoted from the announcement posts.</span>
         </div>
       </div>
     </footer>
