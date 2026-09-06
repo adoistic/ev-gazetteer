@@ -4,18 +4,35 @@ type Counts = Record<ProgrammeId, number>
 
 /**
  * The scope argument, drawn rather than written: Emergent Ventures branches
- * into a numbered main series and four regional and thematic tranches. Solid
- * means held on this site. Dashed and hatched means held at evwinners.org.
+ * into a numbered main series and four regional and thematic tranches.
  *
- * Orientation follows the canvas. The wide drawing is a spine with branch
- * rows; below 900px it is redrawn as a vertical rail rather than squeezed.
- * Plain paths, rects, lines and text only, so it prints and scales cleanly.
+ * Encoding: a solid border means the grantees are on this site. A dashed
+ * border with a hatched marker strip means they are held at evwinners.org.
+ * The hatch is a marker on the edge rather than a fill, so nothing sits on
+ * top of it and every label stays on clean ground.
+ *
+ * Orientation follows the canvas. Below 900px the drawing is replaced by a
+ * vertical rail rather than squeezed into one.
  */
 export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
   const rows = [
-    { key: 'main', label: `Main series, cohorts 1 to ${MAIN.cohorts}`, count: MAIN.winners, here: false },
-    ...PROGRAMMES.map((p) => ({ key: p.id, label: p.label, count: counts[p.id], here: true })),
+    {
+      key: 'main',
+      label: `Main series, cohorts 1 to ${MAIN.cohorts}`,
+      shortLabel: `Main series, 1 to ${MAIN.cohorts}`,
+      count: MAIN.winners,
+      here: false,
+    },
+    ...PROGRAMMES.map((p) => ({
+      key: p.id,
+      label: p.label,
+      shortLabel: p.label,
+      count: counts[p.id],
+      here: true,
+    })),
   ]
+
+  const label = `Emergent Ventures divides into the main series of ${MAIN.winners} winners, held at evwinners.org, and four tranches held here: ${PROGRAMMES.map((p) => `${p.label}, ${counts[p.id]}`).join('; ')}.`
 
   return (
     <section className="diagram" aria-labelledby="dg-h">
@@ -28,14 +45,13 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
             </h2>
           </div>
           <p className="diagram__note">
-            Solid means the grantees are on this site. Hatched means they are held at evwinners.org,
-            where the main series is already covered properly.
+            Solid means the grantees are on this site. The hatched marker means they are held at
+            evwinners.org, where the main series is already covered properly.
           </p>
         </div>
 
         {/* Wide: a spine with one row per branch. */}
-        <svg className="dg-wide" viewBox="0 0 1180 372" role="img"
-             aria-label={`Emergent Ventures divides into the main series of ${MAIN.winners} winners held at evwinners.org, and four tranches held here: ${PROGRAMMES.map((p) => `${p.label}, ${counts[p.id]}`).join('; ')}.`}>
+        <svg className="dg-wide" viewBox="0 0 1180 372" role="img" aria-label={label}>
           <defs>
             <pattern id="dg-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <rect width="6" height="6" className="dg-ground" />
@@ -43,7 +59,6 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
             </pattern>
           </defs>
 
-          {/* Root */}
           <rect x="1" y="140" width="236" height="92" fill="none" stroke="currentColor" strokeWidth="2" />
           <text x="20" y="176" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Emergent</text>
           <text x="20" y="204" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="26" fill="currentColor">Ventures</text>
@@ -51,7 +66,6 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
             MERCATUS CENTER, SINCE 2018
           </text>
 
-          {/* Spine */}
           <line x1="237" y1="186" x2="286" y2="186" stroke="currentColor" strokeWidth="2" />
           <line x1="286" y1="30" x2="286" y2="342" stroke="currentColor" strokeWidth="2" />
 
@@ -61,19 +75,19 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
               <g key={r.key}>
                 <line x1="286" y1={y} x2="336" y2={y} stroke="currentColor" strokeWidth={r.here ? 2 : 1}
                       strokeDasharray={r.here ? undefined : '5 4'} />
-                <rect x="336" y={y - 27} width="843" height="54" fill={r.here ? 'none' : 'url(#dg-hatch)'}
-                      stroke="currentColor" strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '5 4'} />
-                {!r.here && <rect x="352" y={y - 19} width="560" height="38" className="dg-ground" />}
-                <text x={r.here ? 360 : 366} y={y + 7} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="17" fontWeight="700" fill="currentColor">
+                <rect x="336" y={y - 28} width="843" height="56" fill="none" stroke="currentColor"
+                      strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '5 4'} />
+                {!r.here && <rect x="337" y={y - 27} width="16" height="54" fill="url(#dg-hatch)" />}
+                <text x="372" y={y + 7} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="17" fontWeight="700" fill="currentColor">
                   {r.label}
                 </text>
-                <text x="1163" y={y + 10} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="30" fill="currentColor"
-                      style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
-                  {r.count}
-                </text>
-                <text x="1163" y={y - 14} textAnchor="end" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700"
-                      letterSpacing="1.6" fill="currentColor">
+                <text x="1092" y={y + 5} textAnchor="end" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9"
+                      fontWeight="700" letterSpacing="1.6" fill="currentColor">
                   {r.here ? 'HERE' : 'AT EVWINNERS.ORG'}
+                </text>
+                <text x="1163" y={y + 11} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="30"
+                      fill="currentColor" style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
+                  {r.count}
                 </text>
               </g>
             )
@@ -81,7 +95,7 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
         </svg>
 
         {/* Narrow: a vertical rail, redrawn rather than squeezed. */}
-        <svg className="dg-tall" viewBox="0 0 380 470" role="img" aria-hidden="true">
+        <svg className="dg-tall" viewBox="0 0 380 470" role="img" aria-label={label}>
           <defs>
             <pattern id="dg-hatch2" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <rect width="6" height="6" className="dg-ground" />
@@ -104,17 +118,18 @@ export default function ProgrammeDiagram({ counts }: { counts: Counts }) {
                 <line x1="26" y1={y} x2="52" y2={y} stroke="currentColor" strokeWidth={r.here ? 2 : 1}
                       strokeDasharray={r.here ? undefined : '4 3'} />
                 <circle cx="26" cy={y} r="5" fill="currentColor" />
-                <rect x="52" y={y - 26} width="327" height="52" fill={r.here ? 'none' : 'url(#dg-hatch2)'}
-                      stroke="currentColor" strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '4 3'} />
-                {!r.here && <rect x="60" y={y - 18} width="235" height="36" className="dg-ground" />}
-                <text x="66" y={y - 2} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="13" fontWeight="700" fill="currentColor">
-                  {r.key === 'main' ? `Main series, 1 to ${MAIN.cohorts}` : r.label}
+                <rect x="52" y={y - 26} width="327" height="52" fill="none" stroke="currentColor"
+                      strokeWidth={r.here ? 2 : 1} strokeDasharray={r.here ? undefined : '4 3'} />
+                {!r.here && <rect x="53" y={y - 25} width="12" height="50" fill="url(#dg-hatch2)" />}
+                <text x="76" y={y - 2} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="13" fontWeight="700" fill="currentColor">
+                  {r.shortLabel}
                 </text>
-                <text x="66" y={y + 14} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700" letterSpacing="1.4" fill="currentColor">
+                <text x="76" y={y + 14} fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700"
+                      letterSpacing="1.4" fill="currentColor">
                   {r.here ? 'HERE' : 'AT EVWINNERS.ORG'}
                 </text>
-                <text x="370" y={y + 8} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="24" fill="currentColor"
-                      style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
+                <text x="370" y={y + 8} textAnchor="end" fontFamily="Cormorant Garamond, Georgia, serif" fontSize="24"
+                      fill="currentColor" style={{ fontFeatureSettings: "'lnum' 1,'tnum' 1" }}>
                   {r.count}
                 </text>
               </g>
