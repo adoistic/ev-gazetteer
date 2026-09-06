@@ -69,16 +69,16 @@ const check = (file, text, index, rule, detail) => {
   else note(file, rule, detail)
 }
 
-const files = (await walk(OUT)).filter((f) => /\.(html|css|js|txt|json)$/.test(f))
+const files = (await walk(OUT)).filter((f) => /\.(html|css|js|svg|txt|json)$/.test(f))
 
 for (const file of files) {
   const text = await readFile(file, 'utf8')
-  const isCode = /\.(css|html|js)$/.test(file)
+  const isCode = /\.(css|html|js|svg)$/.test(file)
 
   if (isCode) {
     // A hex is only a colour where CSS can see it. Grantee descriptions quote
     // things like "#6394", which is text, not a palette violation.
-    const styleZones = /\.(css|js)$/.test(file)
+    const styleZones = /\.(css|js|svg)$/.test(file)
       ? [{ start: 0, text }]
       : [...text.matchAll(/<style[^>]*>([\s\S]*?)<\/style>|style="([^"]*)"/g)].map((m) => ({
           start: m.index + m[0].indexOf(m[1] ?? m[2] ?? ''),

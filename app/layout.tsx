@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   description,
   applicationName: 'The Emergent Ventures Gazetteer',
   authors: [{ name: 'Adnan Abbasi', url: 'https://thothica.com' }],
-  icons: { icon: '/brand/thothica-thumb-black.png', apple: '/brand/thothica-thumb-black.png' },
   openGraph: {
     title,
     description,
