@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ev-winners-regional-and-thematic",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-01",
+  "account_id": "463bdbff3b53cfdd017602e4598b4de2",
+
+  // The Next.js static export. Anything that is not /api/search is served
+  // straight from here without waking the Worker's own logic.
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+
+  // Query embeddings at request time, same model as the build step.
+  "ai": { "binding": "AI" },
+
+  "observability": { "enabled": true }
+}
