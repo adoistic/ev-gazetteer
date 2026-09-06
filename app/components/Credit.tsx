@@ -1,6 +1,6 @@
-import { NABEEL } from '../lib/types'
+import { ADDED_HERE, NABEEL } from '../lib/types'
 
-/** Nabeel's site is the origin of this one. Say so where nobody can miss it. */
+/** Who collected what. The numbers come from the diff against his repository. */
 export default function Credit({ grants }: { grants: number }) {
   return (
     <section className="band inverse">
@@ -9,10 +9,14 @@ export default function Credit({ grants }: { grants: number }) {
           <p className="eyebrow">Built on</p>
           <h2 style={{ marginTop: 'var(--s3)' }}>Nabeel Qureshi&rsquo;s Emergent Ventures Winners</h2>
           <p>
-            He collected all {grants.toLocaleString('en-GB')} grantees and their announcement posts, and built the
-            semantic search that made them findable. This site takes that dataset and adds a layer on top: every
-            grant read and classified by field, by what was made, by where and by whom, with repeat winners
-            resolved into one person. Corrections belong upstream in his repository, so both sites improve.
+            Nabeel Qureshi built the original site. He collected the grantees, tracked down their
+            announcement posts, and wrote the semantic search that made them findable. His repository
+            holds {NABEEL.entries} entries.
+          </p>
+          <p>
+            This one holds {grants.toLocaleString('en-GB')}. I collected the other {ADDED_HERE}: the India
+            cohorts 3 to 18, the Africa and Caribbean programme, and the Covid prizes. They are in an open
+            pull request to his repository. Corrections to any entry belong there, so both sites get them.
           </p>
         </div>
         <a className="bigbtn" href={NABEEL.site} target="_blank" rel="noopener noreferrer">

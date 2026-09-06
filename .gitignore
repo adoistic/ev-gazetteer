@@ -8,3 +8,7 @@ out/
 
 # Superseded design docs from earlier versions of this project.
 docs/superpowers/
+
+# Archived announcement posts, refetched with `node scripts/fetch-posts.mjs`.
+# 6MB of third-party HTML; the extracted links live in app/data/gazetteer.json.
+data/posts/

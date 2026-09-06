@@ -23,6 +23,7 @@ for 3 per cent. Every entry was read and classified along seven facets:
 | Series and tranche | Including four tranches announced only in prose |
 | Place | Country of work and of origin |
 | Person | Identity resolved across cohorts, so repeat winners read as one person |
+| Links | Hyperlinks recovered from the announcement posts and put back in the text |
 
 Reading rather than pattern matching is what turned up the parts the data does
 not state: Ukraine, archaeology, science education and science communication
@@ -34,6 +35,25 @@ The classification is judgement, not fact. Where a description does not support
 a value it is left blank rather than guessed, and where two rows might be one
 person but the evidence does not settle it they stay separate and the doubt is
 recorded in `data/identity.json`.
+
+## Where the data comes from
+
+Nabeel Qureshi built the original site and collected the grantees and their
+announcement posts. His repository holds 830 entries. This one holds 1,266: the
+other 457 are the India cohorts 3 to 18, the Africa and Caribbean programme and
+the Covid prizes, collected here and sent upstream as a pull request.
+
+The shared CSV keeps description text but drops the hyperlinks inside it, so a
+phrase like "here is his blog" lost the blog. `npm run posts` fetches the 88
+announcement posts and `scripts/lib/post-links.mjs` puts those links back. 1,174
+of 1,266 descriptions match their source paragraph exactly, and 642 grants carry
+at least one recovered link.
+
+The posts are read from the Wayback Machine, not from marginalrevolution.com,
+whose robots.txt asks for a 600 second crawl delay. Honouring that for 88 posts
+would mean fifteen hours of requests against someone else's server. Where a
+paragraph holds two grantees, only the links inside that grantee's own sentence
+are attributed to them, which is why anchor offsets are tracked.
 
 ## How it works
 

@@ -13,6 +13,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { parseCsv } from './lib/csv.mjs'
 import { seriesOf, trancheOf, SERIES, TRANCHES, compareBatches } from './lib/tranches.mjs'
 import { loadClassification } from './validate-classification.mjs'
+import { blocksOf, matchBlock, linksFor, linkifyDescription } from './lib/post-links.mjs'
+import { slugOf } from './fetch-posts.mjs'
 import { embedAll, MODEL, DIMS } from './embed.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -52,6 +54,51 @@ function embedText(w, vocab) {
     .trim()
 }
 
+/**
+ * Attach the hyperlinks the CSV drops.
+ *
+ * The words survive in the description; the addresses only exist in the
+ * announcement post. Each cached post is parsed once, then each grant is
+ * matched to the paragraph it came from.
+ */
+async function attachLinks(grants) {
+  const cache = new Map()
+  let matched = 0
+  let missing = 0
+
+  for (const g of grants) {
+    g.desc = g.description ? [{ text: g.description }] : []
+    g.links = []
+    if (!g.description || !g.link) continue
+
+    const url = /^https?:\/\//i.test(g.link) ? g.link : `https://${g.link}`
+    const file = slugOf(url)
+    if (!cache.has(file)) {
+      try {
+        cache.set(file, blocksOf(await readFile(path.join(root, 'data', 'posts', file), 'utf8')))
+      } catch {
+        cache.set(file, null) // post not cached; the grant keeps plain text
+      }
+    }
+    const blocks = cache.get(file)
+    if (!blocks) {
+      missing++
+      continue
+    }
+
+    const found = matchBlock(g.description, blocks)
+    const links = linksFor(found)
+    if (!links.length) continue
+    const { parts, extra } = linkifyDescription(g.description, links)
+    g.desc = parts
+    g.links = extra
+    if (parts.some((p) => p.href) || extra.length) matched++
+  }
+
+  console.log(`Links recovered for ${matched} grants. ${missing} had no cached post.`)
+  return grants
+}
+
 export async function loadGrants() {
   const text = await readFile(path.join(root, 'data', 'ev-winners.csv'), 'utf8')
   const { rows: cls, errors, vocab } = await loadClassification()
@@ -87,6 +134,7 @@ export async function loadGrants() {
   })
 
   for (const g of grants) g.embedText = embedText(g, vocab)
+  await attachLinks(grants)
   return { grants, vocab }
 }
 
@@ -266,7 +314,7 @@ async function main() {
   await writeFile(
     path.join(root, 'app', 'data', 'gazetteer.json'),
     JSON.stringify({
-      grants: grants.map(({ embedText, ...rest }) => rest),
+      grants: grants.map(({ embedText, description, personal_info, ...rest }) => rest),
       people,
       uncertain,
       facets: buildFacets(grants, vocab),

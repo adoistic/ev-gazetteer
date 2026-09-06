@@ -217,7 +217,7 @@ export default function Explorer({ data }: { data: Gazetteer }) {
           )}
         </div>
         <div className="hint">
-          <span>Try a person, an idea, or a place. Meaning is matched, not just words.</span>
+          <span>Type a name, a subject, or a place. The search matches meaning, so &ldquo;archives&rdquo; finds work on digital preservation.</span>
           <span>
             Press <kbd>/</kbd> to search
           </span>

@@ -30,8 +30,8 @@ export default function Page() {
             </div>
             <div>
               <p className="narration">
-                All {data.grants.length.toLocaleString('en-GB')} grants, read one by one and sorted by field,
-                by what was made, and by where.
+                Every grant read and tagged, so a search for a subject
+                finds the people working on it.
               </p>
             </div>
           </div>

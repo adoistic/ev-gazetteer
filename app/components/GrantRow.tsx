@@ -57,7 +57,19 @@ export default function GrantRow({
         </span>
       </div>
 
-      {grant.description && <p className="g__desc">{grant.description}</p>}
+      {grant.desc.length > 0 && (
+        <p className="g__desc">
+          {grant.desc.map((part, i) =>
+            part.href ? (
+              <a key={i} className="link" href={part.href} target="_blank" rel="noopener noreferrer">
+                {part.text}
+              </a>
+            ) : (
+              <span key={i}>{part.text}</span>
+            )
+          )}
+        </p>
+      )}
 
       <div className="g__meta">
         {facts.map((f) => (
@@ -73,11 +85,19 @@ export default function GrantRow({
         {grant.org && <span>{grant.org}</span>}
       </div>
 
-      {post && (
+      {(post || grant.links.length > 0) && (
         <div className="g__links">
-          <a className="link" href={post} target="_blank" rel="noopener noreferrer">
-            Announcement post
-          </a>
+          {post && (
+            <a className="link" href={post} target="_blank" rel="noopener noreferrer">
+              Announcement post
+            </a>
+          )}
+          {/* Links the post carried whose words are not in the description. */}
+          {grant.links.map((l) => (
+            <a key={l.href} className="link" href={l.href} target="_blank" rel="noopener noreferrer">
+              {l.text}
+            </a>
+          ))}
         </div>
       )}
     </li>

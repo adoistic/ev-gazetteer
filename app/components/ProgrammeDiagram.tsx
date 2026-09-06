@@ -32,13 +32,12 @@ export default function ProgrammeDiagram({
           <div>
             <p className="eyebrow">How the programme divides</p>
             <h2 id="dg-h" style={{ fontSize: 'clamp(1.7rem, 4vw, 2.4rem)', marginTop: 'var(--s2)' }}>
-              Five series, and four tranches hiding inside them
+              Five series, and four tranches inside the cohorts
             </h2>
           </div>
           <p className="diagram__note">
-            The series are named in the data. The tranches below are not: they are announced inside
-            numbered cohorts and marked only by a phrase in the announcement text, so they turn up
-            only if you read all 1,266 entries.
+            The five series are labelled in the data. The four tranches are labelled nowhere. Each is
+            announced inside a numbered cohort and named only in the text of the post.
           </p>
         </div>
 
@@ -78,7 +77,7 @@ export default function ProgrammeDiagram({
 
           <text x="326" y="378" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="10" fontWeight="700"
                 letterSpacing="2" fill="currentColor">
-            ANNOUNCED INSIDE COHORTS, NOT IN THE DATA
+            NAMED ONLY IN THE POST TEXT
           </text>
           <line x1="326" y1="390" x2="1179" y2="390" stroke="currentColor" strokeWidth="1" strokeDasharray="5 4" />
 
@@ -136,7 +135,7 @@ export default function ProgrammeDiagram({
 
           <text x="0" y="412" fontFamily="Teachers, Trebuchet MS, sans-serif" fontSize="9" fontWeight="700"
                 letterSpacing="1.6" fill="currentColor">
-            ANNOUNCED INSIDE COHORTS
+            NAMED ONLY IN THE POST TEXT
           </text>
           <line x1="0" y1="422" x2="379" y2="422" stroke="currentColor" strokeWidth="1" strokeDasharray="4 3" />
 

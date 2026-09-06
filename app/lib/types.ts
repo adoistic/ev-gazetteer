@@ -6,8 +6,10 @@ export type Grant = {
   tranche: string | null
   date: string | null
   link: string | null
-  description: string | null
-  personal_info: string | null
+  /** Description split into plain and linked runs, resolved at build time. */
+  desc: { text: string; href?: string }[]
+  /** Links from the post whose words are not in the description. */
+  links: { text: string; href: string }[]
   personal_links: string[]
   project_links: string[]
   fields: string[]
@@ -62,7 +64,12 @@ export const NABEEL = {
   repo: 'https://github.com/nqureshi/ev-winners',
   home: 'https://nabeelqu.co',
   name: 'Nabeel S. Qureshi',
+  /** Entries in his repository, against 1,266 here. Checked from the diff. */
+  entries: 830,
 }
+
+/** Rows added on top of his collection: India 3 to 18, Africa, Covid prizes. */
+export const ADDED_HERE = 457
 
 export const THOTHICA = 'https://thothica.com'
 export const ADNAN_ID = 1070
