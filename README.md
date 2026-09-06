@@ -102,3 +102,26 @@ other than the permitted hatch, and any dash or banned word in our own copy.
 There are no light and dark modes; sections invert instead.
 
 Not affiliated with Emergent Ventures or the Mercatus Center.
+
+## Licence
+
+The code is MIT. See `LICENSE`.
+
+The dataset is a different matter, and the distinction is worth stating rather
+than glossing:
+
+- `data/ev-winners.csv` has mixed provenance. 457 rows were collected for this
+  project. The rest come from
+  [nqureshi/ev-winners](https://github.com/nqureshi/ev-winners), which carries
+  no licence, so those rows are all rights reserved by default.
+- The 1,263 grantee descriptions are quoted verbatim from announcement posts on
+  Marginal Revolution and belong to their author.
+- The classification is original work for this project and is covered by the
+  MIT licence above: `data/classification/`, `data/identity.json`,
+  `data/vocabulary.json`, and the code that reads them.
+- The fonts in `public/fonts` are OFL. Their licences ship beside them and must
+  stay there if you redistribute the files.
+- `data/posts/` holds archived third-party HTML used only at build time. It is
+  gitignored and never redistributed.
+
+If you want to reuse the grantee data rather than the code, ask upstream first.
