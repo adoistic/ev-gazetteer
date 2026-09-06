@@ -15,12 +15,15 @@ const FIELDS_SHOWN = 8
  * and are merged rather than presented as two lists.
  */
 const GROUPS = [
-  { key: 'programme', label: 'Programme', initial: 6 },
-  { key: 'output', label: 'What they made', initial: 6 },
-  { key: 'stage', label: 'Who they were', initial: 6 },
-  { key: 'purpose', label: 'Kind of grant', initial: 5 },
-  { key: 'country', label: 'Country', initial: 6 },
-  { key: 'topic', label: 'Topic', initial: 6 },
+  { key: 'programme', label: 'Programme', initial: 6, sort: 'count' },
+  // Cohorts stay in programme order. Someone wants "India 15" or "58", and
+  // hunting for it in a list ranked by size is the wrong way round.
+  { key: 'cohort', label: 'Cohort', initial: 8, sort: 'fixed' },
+  { key: 'output', label: 'What they made', initial: 6, sort: 'count' },
+  { key: 'stage', label: 'Who they were', initial: 6, sort: 'count' },
+  { key: 'purpose', label: 'Kind of grant', initial: 5, sort: 'count' },
+  { key: 'country', label: 'Country', initial: 6, sort: 'count' },
+  { key: 'topic', label: 'Topic', initial: 6, sort: 'count' },
 ] as const
 
 type Selected = Record<string, string[]>
@@ -35,6 +38,7 @@ function has(g: Grant, facet: string, v: string): boolean {
     case 'stage': return g.stage === v
     case 'country': return g.country === v
     case 'programme': return g.series === v || g.tranche === v
+    case 'cohort': return g.batch === v
     default: return false
   }
 }
@@ -48,6 +52,7 @@ function valuesOf(g: Grant, facet: string): string[] {
     case 'stage': return [g.stage]
     case 'country': return g.country ? [g.country] : []
     case 'programme': return [g.series, ...(g.tranche ? [g.tranche] : [])]
+    case 'cohort': return [g.batch]
     default: return []
   }
 }
@@ -182,11 +187,13 @@ export default function Explorer({ data }: { data: Gazetteer }) {
     return out
   }, [data.grants, passes])
 
-  const live = (facet: string) =>
-    (catalogue[facet] ?? [])
+  const live = (facet: string, sort: string = 'count') => {
+    const rows = (catalogue[facet] ?? [])
       .map((f) => ({ ...f, count: counts[facet]?.get(f.id) ?? 0 }))
       .filter((f) => f.count > 0 || (sel[facet] ?? []).includes(f.id))
-      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+    // 'fixed' keeps the order the build step chose.
+    return sort === 'fixed' ? rows : rows.sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+  }
 
   const fields = live('field')
   const shownFields = allFields ? fields : fields.slice(0, FIELDS_SHOWN)
@@ -198,7 +205,8 @@ export default function Explorer({ data }: { data: Gazetteer }) {
 
   return (
     <section className="tool" id="grants" aria-live="polite" aria-busy={loading}>
-      <div className="tool__in">
+      <div className="tool__in tool__grid">
+        <div className="controls">
         <div className="find">
           <input
             ref={inputRef}
@@ -259,8 +267,8 @@ export default function Explorer({ data }: { data: Gazetteer }) {
 
           {refineOpen && (
             <div className="refine__body" id="refine-body">
-              {GROUPS.map(({ key, label, initial }) => {
-                const values = live(key)
+              {GROUPS.map(({ key, label, initial, sort }) => {
+                const values = live(key, sort)
                 if (!values.length) return null
                 const open = expanded[key] ?? false
                 const rows = open ? values : values.slice(0, initial)
@@ -309,6 +317,9 @@ export default function Explorer({ data }: { data: Gazetteer }) {
           )}
         </div>
 
+        </div>
+
+        <div className="results">
         <div className="state">
           <span className="state__count">
             <strong>{list.length.toLocaleString('en-GB')}</strong>{' '}
@@ -361,6 +372,7 @@ export default function Explorer({ data }: { data: Gazetteer }) {
             )}
           </>
         )}
+        </div>
       </div>
     </section>
   )

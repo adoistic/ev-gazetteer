@@ -567,3 +567,40 @@ button { font: inherit; color: inherit; background: none; border: none; }
 
 .stats-wrap { margin-top: var(--s5); }
 @media (min-width: 700px) { .stats-wrap { margin-top: var(--s7); } }
+
+/* ---- laptop: controls on the left, results on the right -------------- */
+
+/* Below 1000px the two stack, which is the phone and tablet layout and is
+   left exactly as it was. Above it there is room to put the search and the
+   filters in their own column, so the results start at the top of the page
+   instead of below a screen of controls. */
+@media (min-width: 1000px) {
+  .tool__in.tool__grid {
+    max-width: 1240px;
+    display: grid;
+    grid-template-columns: 312px minmax(0, 1fr);
+    gap: var(--s8);
+    align-items: start;
+  }
+  .controls {
+    position: sticky;
+    top: 76px;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    padding-right: var(--s3);
+    /* The rail scrolls on its own; keep it from dragging the page with it. */
+    overscroll-behavior: contain;
+  }
+  .controls .find input { font-size: 1.15rem; padding: var(--s3); }
+  .controls .hint { flex-direction: column; gap: 4px; font-size: 11px; }
+  .axis { margin-top: var(--s5); }
+
+  /* One chip per row in a narrow rail reads as a list, so make it one. */
+  .controls .chips { flex-direction: column; align-items: stretch; gap: 2px; }
+  .controls .chip { justify-content: space-between; padding: 7px 9px; min-height: 32px; }
+
+  /* The refine panel is a single column in the rail, and its groups stay open. */
+  .controls .refine__body { grid-template-columns: minmax(0, 1fr); gap: var(--s5); }
+  .results .state { margin-top: 0; border-top: none; padding-top: 0; }
+  .results .grants { margin-top: var(--s4); }
+}

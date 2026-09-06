@@ -248,6 +248,14 @@ function buildFacets(grants, vocab) {
     series: asList(tally((g) => g.series), (id) => SERIES.find((s) => s.id === id)?.label ?? id),
     tranche: asList(tally((g) => g.tranche), (id) => TRANCHES.find((t) => t.id === id)?.label ?? id),
     country: asList(tally((g) => g.country)),
+    // Cohorts keep programme order rather than count order: someone looking for
+    // "India 15" wants to find it in a list, not to know it is the 30th biggest.
+    cohort: [...tally((g) => g.batch).entries()]
+      .map(([id, count]) => ({ id, label: id, count }))
+      .sort((a, b) => {
+        const rank = (x) => SERIES.findIndex((s) => s.match.test(x))
+        return rank(a.id) - rank(b.id) || compareBatches(a.id, b.id)
+      }),
     // The long tail of topics is for search, not for browsing. A topic earns a
     // place in the interface only if enough grants carry it and it is not
     // already a country or a kind of grant, which have facets of their own.
